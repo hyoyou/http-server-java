@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClassName = 'com.heatheryou.httpserver.Server'
+    mainClassName = 'com.heatheryou.httpserver.Main'
 }
 
 version '1.0-SNAPSHOT'
