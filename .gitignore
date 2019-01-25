@@ -1,0 +1,12 @@
+# Java
+*.class
+
+# IntelliJ
+out/
+
+# Gradle
+.gradle
+.idea
+build
+
+.DS_Store
