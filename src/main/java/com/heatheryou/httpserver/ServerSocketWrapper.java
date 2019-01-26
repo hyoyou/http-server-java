@@ -14,7 +14,6 @@ public class ServerSocketWrapper implements IServerSocketWrapper {
     @Override
     public ISocketWrapper accept() throws IOException {
         Socket socket = serverSocket.accept();
-        SocketWrapper socketWrapper = new SocketWrapper(socket);
-        return socketWrapper;
+        return new SocketWrapper(socket);
     }
 }
