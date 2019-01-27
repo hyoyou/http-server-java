@@ -1,5 +1,8 @@
 package com.heatheryou.httpserver;
 
-public interface ISocketWrapper {
+import java.io.IOException;
+import java.io.PrintWriter;
 
+public interface ISocketWrapper {
+    PrintWriter getPrintWriter() throws IOException;
 }
