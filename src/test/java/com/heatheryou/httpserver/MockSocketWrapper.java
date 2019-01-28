@@ -1,5 +1,7 @@
 package com.heatheryou.httpserver;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class MockSocketWrapper implements ISocketWrapper {
@@ -12,5 +14,10 @@ public class MockSocketWrapper implements ISocketWrapper {
     @Override
     public PrintWriter getPrintWriter() {
         return printWriter;
+    }
+
+    @Override
+    public BufferedReader getInputStreamReader() throws IOException {
+        return null;
     }
 }
