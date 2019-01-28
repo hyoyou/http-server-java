@@ -2,9 +2,7 @@ package com.heatheryou.httpserver;
 
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +11,9 @@ public class ServerTest {
     public void ServerAnswersSimpleGet() throws IOException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter);
+        StringReader stringReader = new StringReader("GET /simple_get");
+        MockBufferedReader requestReader = new MockBufferedReader();
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, requestReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
         Server server = new Server(mockServerSocketWrapper);
 
@@ -27,13 +27,16 @@ public class ServerTest {
                 ""
         });
         assertEquals(expected, actual);
+
     }
 
     @Test
     public void ServerAnswersSimpleHead() throws IOException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter);
+        StringReader stringReader = new StringReader(" ")
+        BufferedReader requestReader = new MockBufferedReader(stringReader);
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, requestReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
         Server server = new Server(mockServerSocketWrapper);
 

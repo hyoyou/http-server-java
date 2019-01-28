@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerSocketWrapper implements IServerSocketWrapper {
+public class ServerSocketWrapper implements IServerSocketWrapper, AutoCloseable {
     private ServerSocket serverSocket;
 
     public ServerSocketWrapper(int port) throws IOException {
@@ -16,4 +16,14 @@ public class ServerSocketWrapper implements IServerSocketWrapper {
         Socket socket = serverSocket.accept();
         return new SocketWrapper(socket);
     }
+
+    @Override
+    public void close() {
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
