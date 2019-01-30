@@ -1,30 +1,27 @@
-//package com.heatheryou.httpserver;
-//
-//import org.junit.Test;
-//
-//import java.io.PrintWriter;
-//import java.io.StringReader;
-//import java.io.StringWriter;
-//
-//import static org.junit.Assert.assertEquals;
-//
-//class RequestParserTest {
-//
-//    @Test
-//    public void ParserCanDistinguishGETRequests() {
-////        StringReader stringReader = new StringReader("GET HTTP/1.1");
-////        int intValueOfChar;
-////        String requestString = "";
-////        while((intValueOfChar = stringReader.read()) != -1) {
-////            requestString += (char) intValueOfChar;
-////        }
-////        stringReader.close();
-////        RequestParser requestParser = new RequestParser();
-////        requestParser.parseRequest(stringReader);
-////
-////        String actual = requestParser.getUri();
-////        String expected = "GET";
-////
-////        assertEquals(expected, actual);
-//    }
-//}
+package com.heatheryou.httpserver;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class RequestParserTest {
+    @Test
+    public void ParserReturnsResponseLineGivenRequestLine() {
+        RequestParser parser = new RequestParser();
+        List<String> requestLineList = Arrays.asList("GET /simple_get HTTP/1.1");
+        ResponseBuilder responseLine = parser.parse(requestLineList);
+        String header = responseLine.setHeader();
+        String body = responseLine.setBody();
+        Response response = new Response(header, body);
+        String actual = response.getResponseLine();
+        String expected = String.join("\n", new String[]{
+                "HTTP/1.1 200 OK",
+                "Content-Length: 0",
+                "\r\n"
+        });
+        assertEquals(expected, actual);
+    }
+}

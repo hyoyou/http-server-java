@@ -15,7 +15,6 @@ public class SocketWrapper implements ISocketWrapper {
 
     @Override
     public PrintWriter getPrintWriter() throws IOException {
-        // The parameter to PrintWriter is untested.  =(
         return new PrintWriter(socket.getOutputStream(), true);
     }
 

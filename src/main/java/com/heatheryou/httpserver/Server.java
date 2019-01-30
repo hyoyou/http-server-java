@@ -24,7 +24,6 @@ public class Server implements AutoCloseable {
                     requestLineList.add(inputLine);
                     inputLine = requestReader.readLine();
                 }
-
                 RequestParser requestParser = new RequestParser();
                 ResponseBuilder responseBuilder = requestParser.parse(requestLineList);
                 String header = responseBuilder.setHeader();

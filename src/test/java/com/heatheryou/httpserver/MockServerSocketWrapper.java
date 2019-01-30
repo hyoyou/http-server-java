@@ -1,7 +1,5 @@
 package com.heatheryou.httpserver;
 
-import java.io.IOException;
-
 public class MockServerSocketWrapper implements IServerSocketWrapper {
     private MockSocketWrapper mockSocketWrapper;
 
