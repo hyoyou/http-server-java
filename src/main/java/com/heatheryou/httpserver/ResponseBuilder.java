@@ -14,9 +14,8 @@ public class ResponseBuilder {
     public String setHeader() {
         if (method.equals("GET") || method.equals("HEAD")) {
             return(
-                "HTTP/1.1 200 OK\n" +
-                "Content-Length: 0\n" +
-                ""
+                "HTTP/1.1 200 OK\r\n" +
+                "Content-Length: 0\r\n"
             );
         } else {
             return "Invalid Method";

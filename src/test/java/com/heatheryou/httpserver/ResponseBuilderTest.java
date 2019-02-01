@@ -9,7 +9,7 @@ public class ResponseBuilderTest {
     public void ResponseBuilderReturnsHeaderGivenCorrectMethod() {
         ResponseBuilder responseBuilder = new ResponseBuilder("GET", "/simple_get", "HTTP/1.1");
         String actual = responseBuilder.setHeader();
-        String expected = String.join("\n", new String[]{
+        String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",
                 "Content-Length: 0",
                 ""

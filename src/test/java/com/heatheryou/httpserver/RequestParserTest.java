@@ -17,10 +17,12 @@ public class RequestParserTest {
         String body = responseLine.setBody();
         Response response = new Response(header, body);
         String actual = response.getResponseLine();
-        String expected = String.join("\n", new String[]{
+        String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",
                 "Content-Length: 0",
-                "\r\n"
+                "",
+                "",
+                ""
         });
         assertEquals(expected, actual);
     }

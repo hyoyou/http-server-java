@@ -10,6 +10,6 @@ public class Response {
     }
 
     public String getResponseLine() {
-        return header + body;
+        return header + body + "\r\n";
     }
 }
