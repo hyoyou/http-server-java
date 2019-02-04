@@ -11,11 +11,11 @@ public class ServerTest {
     @Test
     public void ServerAnswersSimpleGet() throws Exception {
         String requestLine = "GET /simple_get HTTP/1.1";
-        InputStream stream = new ByteArrayInputStream((requestLine).getBytes(StandardCharsets.UTF_8));
-        System.setIn(stream);
+        StringReader stringReader = new StringReader(requestLine);
+        BufferedReader bufferedReader = new BufferedReader(stringReader);
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter);
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
         Server server = new Server(mockServerSocketWrapper);
 
