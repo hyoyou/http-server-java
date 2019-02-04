@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RequestParserTest {
     @Test
-    public void ParserReturnsResponseLineGivenRequestLine() {
+    public void ItReturnsResponseLineGivenRequestLine() {
         RequestParser parser = new RequestParser();
         List<String> requestLineList = Arrays.asList("GET /simple_get HTTP/1.1");
         ResponseBuilder responseLine = parser.parse(requestLineList);

@@ -1,5 +1,7 @@
 package com.heatheryou.httpserver;
 
+import com.heatheryou.httpserver.constants.StatusLine;
+
 public class ResponseBuilder {
     String method;
     String uri;
@@ -14,7 +16,7 @@ public class ResponseBuilder {
     public String setHeader() {
         if (method.equals("GET") || method.equals("HEAD")) {
             return(
-                "HTTP/1.1 200 OK\r\n" +
+                StatusLine.HTTP_VERSION + StatusLine.SP + StatusLine.STATUS_CODE_200 + StatusLine.SP + StatusLine.REASON_PHRASE_200 + StatusLine.CRLF +
                 "Content-Length: 0\r\n"
             );
         } else {

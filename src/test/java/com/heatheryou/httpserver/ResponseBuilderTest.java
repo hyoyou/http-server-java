@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ResponseBuilderTest {
     @Test
-    public void ResponseBuilderReturnsHeaderGivenCorrectMethod() {
+    public void ItReturnsHeaderGivenCorrectMethod() {
         ResponseBuilder responseBuilder = new ResponseBuilder("GET", "/simple_get", "HTTP/1.1");
         String actual = responseBuilder.setHeader();
         String expected = String.join("\r\n", new String[]{
@@ -18,7 +18,7 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ResponseBuilderReturnsInvalidMessageGivenIncorrectMethod() {
+    public void ItReturnsInvalidMessageGivenIncorrectMethod() {
         ResponseBuilder responseBuilder = new ResponseBuilder("POST", "/simple_get", "HTTP/1.1");
         String actual = responseBuilder.setHeader();
         String expected = "Invalid Method";
@@ -26,7 +26,7 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ResponseBuilderReturnsEmptyBodyWhenURIExpectsEmptyBody() {
+    public void ItReturnsEmptyBodyWhenURIExpectsEmptyBody() {
         ResponseBuilder responseBuilder = new ResponseBuilder("GET", "/simple_get", "HTTP/1.1");
         String actual = responseBuilder.setBody();
         String expected = "\r\n";
