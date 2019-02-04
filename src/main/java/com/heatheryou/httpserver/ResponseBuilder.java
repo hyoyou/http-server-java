@@ -17,10 +17,16 @@ public class ResponseBuilder {
 
     public String setHeader() {
         if (method.equals("GET") || method.equals("HEAD")) {
-            return(
-                StatusLine.HTTP_VERSION + CharacterSet.SP + StatusLine.STATUS_CODE_200 + CharacterSet.SP + StatusLine.REASON_PHRASE_200 + CharacterSet.CRLF +
-                EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
-            );
+            return (
+                    StatusLine.HTTP_VERSION + CharacterSet.SP + StatusLine.STATUS_CODE_200 + CharacterSet.SP + StatusLine.REASON_PHRASE_200 + CharacterSet.CRLF +
+                            EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
+                    );
+        } else if (method.equals("OPTIONS")) {
+            return (
+                    StatusLine.HTTP_VERSION + CharacterSet.SP + StatusLine.STATUS_CODE_200 + CharacterSet.SP + StatusLine.REASON_PHRASE_200 + CharacterSet.CRLF +
+                            "Allow: OPTIONS,HEAD,GET" + CharacterSet.CRLF +
+                            EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
+                    );
         } else {
             return "Invalid Method";
         }
@@ -30,7 +36,7 @@ public class ResponseBuilder {
         if (uri.equals("/simple_get")) {
             return CharacterSet.CRLF;
         } else {
-            return "";
+            return CharacterSet.CRLF;
         }
     }
 }
