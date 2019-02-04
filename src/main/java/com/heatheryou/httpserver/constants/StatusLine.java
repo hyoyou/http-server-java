@@ -16,12 +16,9 @@ public class StatusLine {
     public static final String REASON_PHRASE_404 = "Not Found";
     public static final String REASON_PHRASE_405 = "Method Not Allowed";
 
-    public static final String SP = " ";
-    public static final String CRLF = "\r\n";
-
     public static Map<Integer, String> statusCodeMessage;
     static {
-        statusCodeMessage = new HashMap<Integer, String>();
+        statusCodeMessage = new HashMap<>();
         statusCodeMessage.put(STATUS_CODE_200, REASON_PHRASE_200);
         statusCodeMessage.put(STATUS_CODE_301, REASON_PHRASE_301);
         statusCodeMessage.put(STATUS_CODE_404, REASON_PHRASE_404);
