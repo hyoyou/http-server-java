@@ -16,16 +16,11 @@ public class Server implements AutoCloseable {
          try {
              ISocketWrapper socketWrapper = serverSocketWrapper.accept();
              BufferedReader requestReader = socketWrapper.getInputStreamReader();
-             String inputLine = requestReader.readLine();
-             List<String> requestLineList = new ArrayList<>();
-             while (inputLine != null && inputLine.length() > 0) {
-                 requestLineList.add(inputLine);
-                 inputLine = requestReader.readLine();
-             }
              RequestParser requestParser = new RequestParser();
-             ResponseBuilder responseBuilder = requestParser.parse(requestLineList);
-             String header = responseBuilder.setHeader();
-             String body = responseBuilder.setBody();
+             List<String> requestList = requestParser.readRequest(requestReader);
+             ResponseBuilder requestLine = requestParser.parse(requestList);
+             String header = requestLine.setHeader();
+             String body = requestLine.setBody();
              Response response = new Response(header, body);
              String responseLine = response.getResponseLine();
              PrintWriter printWriter = socketWrapper.getPrintWriter();
