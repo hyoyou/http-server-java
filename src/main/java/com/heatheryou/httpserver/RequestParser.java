@@ -8,6 +8,14 @@ import java.util.List;
 public class RequestParser {
     private List<String> requestList;
 
+    public void processRequest(BufferedReader requestReader, Router router) throws IOException {
+        List<String> requestList = readRequest(requestReader);
+        String[] requestLine = parse(requestList);
+        String uri = getUri(requestLine);
+        String method = getMethod(requestLine);
+        router.setRequest(uri, method);
+    }
+
     public List<String> readRequest(BufferedReader requestReader) throws IOException {
         requestList = new ArrayList<>();
         String inputLine = requestReader.readLine();
@@ -18,12 +26,16 @@ public class RequestParser {
         return requestList;
     }
 
-    public ResponseBuilder parse(List<String> requestLineList) {
-        String requestString = requestLineList.get(0);
-        String[] requestArray = requestString.split(" ");
-        String method = requestArray[0];
-        String uri = requestArray[1];
-        String protocol = requestArray[2];
-        return new ResponseBuilder(method, uri, protocol);
+    public String[] parse(List<String> requestList) {
+        String requestString = requestList.get(0);
+        return requestString.split(" ");
+    }
+
+    public String getUri(String[] requestLine) {
+        return requestLine[0];
+    }
+
+    public String getMethod(String[] requestLine) {
+        return requestLine[1];
     }
 }

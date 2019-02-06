@@ -2,7 +2,6 @@ package com.heatheryou.httpserver;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Server implements AutoCloseable {
@@ -17,10 +16,13 @@ public class Server implements AutoCloseable {
              ISocketWrapper socketWrapper = serverSocketWrapper.accept();
              BufferedReader requestReader = socketWrapper.getInputStreamReader();
              RequestParser requestParser = new RequestParser();
-             List<String> requestList = requestParser.readRequest(requestReader);
-             ResponseBuilder requestLine = requestParser.parse(requestList);
-             String header = requestLine.setHeader();
-             String body = requestLine.setBody();
+             Router router = new Router();
+             requestParser.processRequest(requestReader, router);
+             String method = router.getMethod();
+             router.handleRequest(method);
+             ResponseBuilder responseBuilder = new ResponseBuilder();
+             String header = responseBuilder.getHeader();
+             String body = responseBuilder.getBody();
              Response response = new Response(header, body);
              String responseLine = response.getResponseLine();
              PrintWriter printWriter = socketWrapper.getPrintWriter();

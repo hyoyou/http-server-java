@@ -5,38 +5,25 @@ import com.heatheryou.httpserver.constants.StatusLine;
 import com.heatheryou.httpserver.constants.CharacterSet;
 
 public class ResponseBuilder {
-    String method;
-    String uri;
-    String protocol;
+    String header;
+    String body;
 
-    public ResponseBuilder(String method, String uri, String protocol) {
-        this.method = method;
-        this.uri = uri;
-        this.protocol = protocol;
+    public void setHeader(int statusCode) {
+        header = (
+                StatusLine.HTTP_VERSION + CharacterSet.SP + statusCode + CharacterSet.SP + StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF +
+                        EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
+        );
     }
 
-    public String setHeader() {
-        if (method.equals("GET") || method.equals("HEAD")) {
-            return (
-                    StatusLine.HTTP_VERSION + CharacterSet.SP + StatusLine.STATUS_CODE_200 + CharacterSet.SP + StatusLine.REASON_PHRASE_200 + CharacterSet.CRLF +
-                            EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
-                    );
-        } else if (method.equals("OPTIONS")) {
-            return (
-                    StatusLine.HTTP_VERSION + CharacterSet.SP + StatusLine.STATUS_CODE_200 + CharacterSet.SP + StatusLine.REASON_PHRASE_200 + CharacterSet.CRLF +
-                            "Allow: OPTIONS,HEAD,GET" + CharacterSet.CRLF +
-                            EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
-                    );
-        } else {
-            return "Invalid Method";
-        }
+    public void setBody() {
+       body = CharacterSet.CRLF;
     }
 
-    public String setBody() {
-        if (uri.equals("/simple_get")) {
-            return CharacterSet.CRLF;
-        } else {
-            return CharacterSet.CRLF;
-        }
+    public String getHeader() {
+        return header;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

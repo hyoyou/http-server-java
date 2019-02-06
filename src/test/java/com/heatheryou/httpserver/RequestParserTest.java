@@ -8,13 +8,14 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class RequestParserTest {
     @Test
     public void ItReturnsRequestInListForm() throws IOException {
-        String requestLine = "GET /simple_get HTTP/1.1";
-        StringReader stringReader = new StringReader(requestLine);
+        String request = "GET /simple_get HTTP/1.1";
+        StringReader stringReader = new StringReader(request);
         BufferedReader bufferedReader = new BufferedReader(stringReader);
         RequestParser parser = new RequestParser();
         List<String> actual = parser.readRequest(bufferedReader);
@@ -23,21 +24,34 @@ public class RequestParserTest {
     }
 
     @Test
-    public void ItReturnsResponseLineGivenRequestLine() {
+    public void ItReturnsRequestLineGivenFullRequest() {
         RequestParser parser = new RequestParser();
-        List<String> requestLineList = Arrays.asList("GET /simple_get HTTP/1.1");
-        ResponseBuilder responseLine = parser.parse(requestLineList);
-        String header = responseLine.setHeader();
-        String body = responseLine.setBody();
-        Response response = new Response(header, body);
-        String actual = response.getResponseLine();
-        String expected = String.join("\r\n", new String[]{
-                "HTTP/1.1 200 OK",
-                "Content-Length: 0",
-                "",
-                "",
-                ""
-        });
+        List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
+        String[] actual = parser.parse(requestList);
+        String[] expected = new String[3];
+        expected[0] = "GET";
+        expected[1] = "/simple_get";
+        expected[2] = "HTTP/1.1";
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ItReturnsUriGivenRequestLine() {
+        RequestParser parser = new RequestParser();
+        List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
+        String[] requestLine = parser.parse(requestList);
+        String actual = parser.getUri(requestLine);
+        String expected = "GET";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void ItReturnsMethodGivenRequestLine() {
+        RequestParser parser = new RequestParser();
+        List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
+        String[] requestLine = parser.parse(requestList);
+        String actual = parser.getMethod(requestLine);
+        String expected = "/simple_get";
         assertEquals(expected, actual);
     }
 }
