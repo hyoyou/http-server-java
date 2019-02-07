@@ -8,12 +8,12 @@ import java.util.List;
 public class RequestParser {
     private List<String> requestList;
 
-    public void processRequest(BufferedReader requestReader, Router router) throws IOException {
+    public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
         String uri = getUri(requestLine);
         String method = getMethod(requestLine);
-        router.setRequest(uri, method);
+        return new Request(uri, method);
     }
 
     public List<String> readRequest(BufferedReader requestReader) throws IOException {
@@ -31,11 +31,12 @@ public class RequestParser {
         return requestString.split(" ");
     }
 
-    public String getUri(String[] requestLine) {
+    public String getMethod(String[] requestLine) {
         return requestLine[0];
     }
 
-    public String getMethod(String[] requestLine) {
+    public String getUri(String[] requestLine) {
         return requestLine[1];
     }
+
 }

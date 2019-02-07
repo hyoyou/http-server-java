@@ -1,5 +1,6 @@
 package com.heatheryou.httpserver;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
@@ -7,6 +8,17 @@ import java.io.*;
 import static org.junit.Assert.assertEquals;
 
 public class ServerTest {
+    private Router router;
+    private RequestParser parser;
+    private ResponseBuilder builder;
+
+    @Before
+    public void setUp() throws Exception {
+        router = new Router();
+        parser = new RequestParser();
+        builder = new ResponseBuilder();
+    }
+
     @Test
     public void ServerAnswersSimpleGet() {
         String requestLine = "GET /simple_get HTTP/1.1";
@@ -16,7 +28,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper);
+        Server server = new Server(mockServerSocketWrapper, router, parser, builder);
 
         server.start();
 
@@ -41,7 +53,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper);
+        Server server = new Server(mockServerSocketWrapper, router, parser, builder);
 
         server.start();
 

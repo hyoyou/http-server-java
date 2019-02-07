@@ -41,7 +41,7 @@ public class RequestParserTest {
         List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
         String[] requestLine = parser.parse(requestList);
         String actual = parser.getUri(requestLine);
-        String expected = "GET";
+        String expected = "/simple_get";
         assertEquals(expected, actual);
     }
 
@@ -51,7 +51,7 @@ public class RequestParserTest {
         List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
         String[] requestLine = parser.parse(requestList);
         String actual = parser.getMethod(requestLine);
-        String expected = "/simple_get";
+        String expected = "GET";
         assertEquals(expected, actual);
     }
 }

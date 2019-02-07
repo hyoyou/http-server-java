@@ -4,23 +4,51 @@ import com.heatheryou.httpserver.constants.EntityHeader;
 import com.heatheryou.httpserver.constants.StatusLine;
 import com.heatheryou.httpserver.constants.CharacterSet;
 
+import java.util.Arrays;
+
 public class ResponseBuilder {
     String header;
     String body;
+    String statusLine;
+    String entityHeader;
 
-    public void setHeader(int statusCode) {
-        header = (
-                StatusLine.HTTP_VERSION + CharacterSet.SP + statusCode + CharacterSet.SP + StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF +
-                        EntityHeader.CONTENT_LENGTH + CharacterSet.SP + 0 + CharacterSet.CRLF
-        );
+    public Response buildResponse(int statusCode, String[] entityHeaders, String content) {
+        setStatusLine(statusCode);
+        setEntityHeader(entityHeaders);
+        setBody(content);
+        String header = getHeader();
+        String body = getBody();
+        return new Response(header, body);
     }
 
-    public void setBody() {
-       body = CharacterSet.CRLF;
+    public void setHeader() {
+        header = getStatusLine() + getEntityHeader();
     }
 
     public String getHeader() {
+        setHeader();
         return header;
+    }
+
+    public void setStatusLine(int statusCode) {
+        statusLine = StatusLine.HTTP_VERSION + CharacterSet.SP + statusCode + CharacterSet.SP +
+                StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF;
+    }
+
+    public String getStatusLine() {
+        return statusLine;
+    }
+
+    public void setEntityHeader(String[] entityHeaders) {
+        entityHeader = String.join("", entityHeaders);
+    }
+
+    public String getEntityHeader() {
+        return entityHeader;
+    }
+
+    public void setBody(String content) {
+        body = content + CharacterSet.CRLF;
     }
 
     public String getBody() {
