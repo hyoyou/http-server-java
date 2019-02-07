@@ -5,7 +5,7 @@ import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 public class OptionsHandlerTest {
     @Test
