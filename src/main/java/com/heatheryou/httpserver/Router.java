@@ -26,8 +26,11 @@ public class Router {
     }
 
     public boolean isValidRequest(String uri, String method) {
-        List<String> methodList = allowedMethods(uri);
-        return methodList.contains(method);
+        if (allowedMethods(uri) != null) {
+            List<String> methodList = allowedMethods(uri);
+            return methodList.contains(method);
+        }
+        return false;
     }
 
     public List<String> allowedMethods(String uri) {
