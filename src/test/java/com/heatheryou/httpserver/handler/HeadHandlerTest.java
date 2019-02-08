@@ -2,8 +2,7 @@ package com.heatheryou.httpserver.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
-import com.heatheryou.httpserver.constants.CharacterSet;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
