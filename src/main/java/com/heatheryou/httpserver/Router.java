@@ -9,12 +9,10 @@ public class Router {
     public static Map<String, ArrayList<String>> routeMap;
     static {
         routeMap = new HashMap<>();
-        routeMap.put("/redirect", new ArrayList<>(Arrays.asList("GET")));
         routeMap.put("/method_options", new ArrayList<>(Arrays.asList("OPTIONS","HEAD","GET")));
         routeMap.put("/method_options2", new ArrayList<>(Arrays.asList("POST","PUT","OPTIONS","HEAD","GET")));
         routeMap.put("/get_with_body", new ArrayList<>(Arrays.asList("OPTIONS","HEAD")));
         routeMap.put("/simple_get", new ArrayList<>(Arrays.asList("GET","HEAD")));
-        routeMap.put("/echo_body", new ArrayList<>(Arrays.asList("POST")));
     }
 
     public static Map<String, IHandler> handlerMap;
