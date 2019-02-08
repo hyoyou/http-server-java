@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ResponseTest {
     @Test
-    public void GetResponseLineReturnsResponseLineProvidedHeaderAndBody() {
+    public void ItReturnsResponseLineProvidedHeaderAndBody() {
         Response response = new Response("HTTP/1.1 200 OK\r\nContent-Length: 0\r\n", "\r\n");
         String actual = response.getResponseLine();
         String expected = String.join("\r\n", new String[]{

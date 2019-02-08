@@ -1,35 +1,34 @@
 package com.heatheryou.httpserver;
 
+import com.heatheryou.httpserver.handler.IHandler;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Server implements AutoCloseable {
     private IServerSocketWrapper serverSocketWrapper;
+    private Router router;
+    private RequestParser parser;
+    private ResponseBuilder builder;
 
-    public Server(IServerSocketWrapper serverSocketWrapper) {
+    public Server(IServerSocketWrapper serverSocketWrapper, Router router, RequestParser parser, ResponseBuilder builder) {
         this.serverSocketWrapper = serverSocketWrapper;
+        this.router = router;
+        this.parser = parser;
+        this.builder = builder;
     }
 
     public void start() {
          try {
-             ISocketWrapper socketWrapper = serverSocketWrapper.accept();
-             BufferedReader requestReader = socketWrapper.getInputStreamReader();
-             String inputLine = requestReader.readLine();
-             List<String> requestLineList = new ArrayList<>();
-             while (inputLine != null && inputLine.length() > 0) {
-                 requestLineList.add(inputLine);
-                 inputLine = requestReader.readLine();
-             }
-             RequestParser requestParser = new RequestParser();
-             ResponseBuilder responseBuilder = requestParser.parse(requestLineList);
-             String header = responseBuilder.setHeader();
-             String body = responseBuilder.setBody();
-             Response response = new Response(header, body);
-             String responseLine = response.getResponseLine();
-             PrintWriter printWriter = socketWrapper.getPrintWriter();
-             printWriter.print(responseLine);
+             ISocketWrapper clientSocket = serverSocketWrapper.accept();
+             BufferedReader requestReader = clientSocket.getInputStreamReader();
+             PrintWriter printWriter = clientSocket.getPrintWriter();
+
+             Request request = parser.processRequest(requestReader);
+             IHandler handler = router.handleRequest(request);
+             Response response = handler.handle(request);
+             String responseString = response.getResponseLine();
+             printWriter.print(responseString);
              printWriter.flush();
          } catch (Exception e) {
              System.out.println(e.getMessage());

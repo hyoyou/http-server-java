@@ -4,9 +4,11 @@ import java.io.*;
 
 public class MockSocketWrapper implements ISocketWrapper {
     private PrintWriter printWriter;
+    private BufferedReader bufferedReader;
 
-    public MockSocketWrapper(PrintWriter printWriter) {
+    public MockSocketWrapper(PrintWriter printWriter, BufferedReader bufferedReader) {
         this.printWriter = printWriter;
+        this.bufferedReader = bufferedReader;
     }
 
     @Override
@@ -15,7 +17,5 @@ public class MockSocketWrapper implements ISocketWrapper {
     }
 
     @Override
-    public BufferedReader getInputStreamReader() {
-        return new BufferedReader(new InputStreamReader(System.in));
-    }
+    public BufferedReader getInputStreamReader() { return bufferedReader; }
 }
