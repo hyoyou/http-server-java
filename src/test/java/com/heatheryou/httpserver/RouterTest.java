@@ -1,10 +1,14 @@
 package com.heatheryou.httpserver;
 
+import com.heatheryou.httpserver.handler.IHandler;
+import com.heatheryou.httpserver.handler.MethodNotAllowedHandler;
+import com.heatheryou.httpserver.handler.NoRouteFoundHandler;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 public class RouterTest {
@@ -24,10 +28,46 @@ public class RouterTest {
     }
 
     @Test
-    public void ItReturnsFalseIfRequestedMethodAndUriNotSupported() {
+    public void ItReturnsFalseIfRequestedUriIsValidButMethodNotSupported() {
         Router router = new Router();
         boolean actual = router.isValidRequest("/simple_get", "POST");
         assertFalse(actual);
     }
 
+    @Test
+    public void ItReturnsFalseIfRequestedUriAndMethodNotSupported() {
+        Router router = new Router();
+        boolean actual = router.isValidRequest("/invalid_uri", "POST");
+        assertFalse(actual);
+    }
+
+    @Test
+    public void ItReturnsTrueIfValidUriIsRequested() {
+        Router router = new Router();
+        boolean actual = router.isValidRoute("/simple_get");
+        assertTrue(actual);
+    }
+
+    @Test
+    public void ItReturnsFalseIfInvalidUriIsRequested() {
+        Router router = new Router();
+        boolean actual = router.isValidRoute("/invalid_uri");
+        assertFalse(actual);
+    }
+
+    @Test
+    public void ItReturnsMethodNotAllowedHandlerIfValidUriWithInvalidMethodIsRequested() {
+        Router router = new Router();
+        Request request = new Request("/simple_get", "POST");
+        IHandler actual = router.handleRequest(request);
+        assertThat(actual, instanceOf(MethodNotAllowedHandler.class));
+    }
+
+    @Test
+    public void ItReturnsNoRouteFoundHandlerIfInvalidUriWithInvalidMethodIsRequested() {
+        Router router = new Router();
+        Request request = new Request("/invalid_route", "POST");
+        IHandler actual = router.handleRequest(request);
+        assertThat(actual, instanceOf(NoRouteFoundHandler.class));
+    }
 }

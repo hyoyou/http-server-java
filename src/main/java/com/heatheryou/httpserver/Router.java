@@ -37,7 +37,7 @@ public class Router {
         return routeMap.get(uri);
     }
 
-    private boolean isValidRoute(String uri) {
+    public boolean isValidRoute(String uri) {
         return routeMap.containsKey(uri);
     }
 
