@@ -12,7 +12,7 @@ import java.util.List;
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_405;
 
-public class MethodNotAllowedHandler implements IHandler {
+public class MethodNotAllowedHandler implements RequestHandler {
     private Router router;
 
     @Override

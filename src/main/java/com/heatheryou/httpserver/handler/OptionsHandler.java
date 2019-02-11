@@ -12,7 +12,7 @@ import java.util.List;
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
 
-public class OptionsHandler implements IHandler {
+public class OptionsHandler implements RequestHandler {
     private Router router;
 
     @Override

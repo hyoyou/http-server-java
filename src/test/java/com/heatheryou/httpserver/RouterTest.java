@@ -1,6 +1,6 @@
 package com.heatheryou.httpserver;
 
-import com.heatheryou.httpserver.handler.IHandler;
+import com.heatheryou.httpserver.handler.RequestHandler;
 import com.heatheryou.httpserver.handler.MethodNotAllowedHandler;
 import com.heatheryou.httpserver.handler.NoRouteFoundHandler;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class RouterTest {
     public void handleRequestReturnsMethodNotAllowedHandlerIfValidUriWithInvalidMethodIsRequested() {
         Router router = new Router();
         Request request = new Request("/simple_get", "POST");
-        IHandler actual = router.handleRequest(request);
+        RequestHandler actual = router.handleRequest(request);
         assertThat(actual, instanceOf(MethodNotAllowedHandler.class));
     }
 
@@ -67,7 +67,7 @@ public class RouterTest {
     public void handleRequestReturnsNoRouteFoundHandlerIfInvalidUriWithInvalidMethodIsRequested() {
         Router router = new Router();
         Request request = new Request("/invalid_route", "POST");
-        IHandler actual = router.handleRequest(request);
+        RequestHandler actual = router.handleRequest(request);
         assertThat(actual, instanceOf(NoRouteFoundHandler.class));
     }
 }

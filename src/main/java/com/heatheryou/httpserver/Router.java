@@ -15,7 +15,7 @@ public class Router {
         routeMap.put("/simple_get", new ArrayList<>(Arrays.asList("GET","HEAD")));
     }
 
-    public static Map<String, IHandler> handlerMap;
+    public static Map<String, RequestHandler> handlerMap;
     static {
         handlerMap = new HashMap<>();
         handlerMap.put("OPTIONS", new OptionsHandler());
@@ -39,7 +39,7 @@ public class Router {
         return routeMap.containsKey(uri);
     }
 
-    public IHandler handleRequest(Request request) {
+    public RequestHandler handleRequest(Request request) {
         String uri = request.getUri();
         String method = request.getMethod();
         if (isValidRequest(uri, method)) {
@@ -50,7 +50,7 @@ public class Router {
         return new NoRouteFoundHandler();
     }
 
-    private IHandler getHandler(String method) {
+    private RequestHandler getHandler(String method) {
         return handlerMap.get(method);
     }
 }
