@@ -24,7 +24,7 @@ public class OptionsHandler implements IHandler {
     }
 
     public String getAllowedMethods(Request request) {
-        return EntityHeader.ALLOWED_METHODS + CharacterSet.SP + getAllowedMethodsList(request) + CharacterSet.CRLF;
+        return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList(request) + CharacterSet.CRLF;
     }
 
     public String getAllowedMethodsList(Request request) {
@@ -34,6 +34,6 @@ public class OptionsHandler implements IHandler {
     }
 
     public String getContentLength() {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
