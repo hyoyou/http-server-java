@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class RouterTest {
     @Test
-    public void ItReturnsListOfAvailableMethodsGivenUri() {
+    public void allowedMethodsReturnsListOfAvailableMethodsGivenUri() {
         Router router = new Router();
         List<String> actual = router.allowedMethods("/simple_get");
         List<String> expected = Arrays.asList("GET", "HEAD");
@@ -21,42 +21,42 @@ public class RouterTest {
     }
 
     @Test
-    public void ItReturnsTrueIfRequestedMethodAndUriAreSupported() {
+    public void isValidRequestReturnsTrueIfRequestedMethodAndUriAreSupported() {
         Router router = new Router();
         boolean actual = router.isValidRequest("/simple_get", "HEAD");
         assertTrue(actual);
     }
 
     @Test
-    public void ItReturnsFalseIfRequestedUriIsValidButMethodNotSupported() {
+    public void isValidRequestReturnsFalseIfRequestedUriIsValidButMethodNotSupported() {
         Router router = new Router();
         boolean actual = router.isValidRequest("/simple_get", "POST");
         assertFalse(actual);
     }
 
     @Test
-    public void ItReturnsFalseIfRequestedUriAndMethodNotSupported() {
+    public void isValidRequestReturnsFalseIfRequestedUriAndMethodNotSupported() {
         Router router = new Router();
         boolean actual = router.isValidRequest("/invalid_uri", "POST");
         assertFalse(actual);
     }
 
     @Test
-    public void ItReturnsTrueIfValidUriIsRequested() {
+    public void isValidRouteReturnsTrueIfValidUriIsRequested() {
         Router router = new Router();
         boolean actual = router.isValidRoute("/simple_get");
         assertTrue(actual);
     }
 
     @Test
-    public void ItReturnsFalseIfInvalidUriIsRequested() {
+    public void isValidRouteReturnsFalseIfInvalidUriIsRequested() {
         Router router = new Router();
         boolean actual = router.isValidRoute("/invalid_uri");
         assertFalse(actual);
     }
 
     @Test
-    public void ItReturnsMethodNotAllowedHandlerIfValidUriWithInvalidMethodIsRequested() {
+    public void handleRequestReturnsMethodNotAllowedHandlerIfValidUriWithInvalidMethodIsRequested() {
         Router router = new Router();
         Request request = new Request("/simple_get", "POST");
         IHandler actual = router.handleRequest(request);
@@ -64,7 +64,7 @@ public class RouterTest {
     }
 
     @Test
-    public void ItReturnsNoRouteFoundHandlerIfInvalidUriWithInvalidMethodIsRequested() {
+    public void handleRequestReturnsNoRouteFoundHandlerIfInvalidUriWithInvalidMethodIsRequested() {
         Router router = new Router();
         Request request = new Request("/invalid_route", "POST");
         IHandler actual = router.handleRequest(request);

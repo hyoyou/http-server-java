@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class NoRouteFoundHandlerTest {
 
     @Test
-    public void ItReturnsTheStatusCode404AndAnEmptyBody() {
+    public void noRouteFoundHandlerReturnsStatusCode404AndAnEmptyBody() {
         NoRouteFoundHandler handler = new NoRouteFoundHandler();
         Request request = new Request("/invalid_route", "GET");
         Response response = handler.handle(request);
