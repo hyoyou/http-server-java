@@ -20,7 +20,7 @@ public class Router {
         handlerMap = new HashMap<>();
         handlerMap.put("OPTIONS", new OptionsHandler());
         handlerMap.put("GET", new GetHandler());
-        handlerMap.put("HEAD", new HeadHandler());
+        handlerMap.put("HEAD", new GetHandler());
     }
 
     public boolean isValidRequest(String uri, String method) {
