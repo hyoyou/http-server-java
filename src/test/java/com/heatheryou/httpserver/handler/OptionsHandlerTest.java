@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class OptionsHandlerTest {
     @Test
-    public void ItIsAbleToRetrieveAListOfAllowedMethodsProvidedTheRequest() {
+    public void getAllowedMethodsListIsAbleToRetrieveAListOfAllowedMethodsProvidedTheRequest() {
         OptionsHandler handler = new OptionsHandler();
         Request request = new Request("/simple_get", "GET");
         String actual = handler.getAllowedMethodsList(request);
@@ -18,19 +18,19 @@ public class OptionsHandlerTest {
     }
 
     @Test
-    public void ItIsAbleToBuildEntityHeaderAllowedMethodsProvidedTheRequest() {
+    public void getAllowedMethodsIsAbleToBuildEntityHeaderAllowedMethodsProvidedTheRequest() {
         OptionsHandler handler = new OptionsHandler();
         Request request = new Request("/simple_get", "GET");
         String actual = handler.getAllowedMethods(request);
-        String expected = EntityHeader.ALLOWED_METHODS + CharacterSet.SP + "GET,HEAD" + CharacterSet.CRLF;
+        String expected = EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + "GET,HEAD" + CharacterSet.CRLF;
         assertEquals(expected, actual);
     }
 
     @Test
-    public void ItIsAbleToPrintOutContentLengthEntityHeader() {
+    public void getContentLengthIsAbleToPrintOutContentLengthEntityHeader() {
         OptionsHandler handler = new OptionsHandler();
         String actual = handler.getContentLength();
-        String expected = EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        String expected = EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
         assertEquals(expected, actual);
     }
 }

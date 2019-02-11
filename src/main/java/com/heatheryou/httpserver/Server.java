@@ -1,6 +1,6 @@
 package com.heatheryou.httpserver;
 
-import com.heatheryou.httpserver.handler.IHandler;
+import com.heatheryou.httpserver.handler.RequestHandler;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -25,7 +25,7 @@ public class Server implements AutoCloseable {
              PrintWriter printWriter = clientSocket.getPrintWriter();
 
              Request request = parser.processRequest(requestReader);
-             IHandler handler = router.handleRequest(request);
+             RequestHandler handler = router.handleRequest(request);
              Response response = handler.handle(request);
              String responseString = response.getResponseLine();
              printWriter.print(responseString);

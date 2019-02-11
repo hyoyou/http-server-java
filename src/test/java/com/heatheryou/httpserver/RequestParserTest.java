@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RequestParserTest {
     @Test
-    public void ItReturnsRequestInListForm() throws IOException {
+    public void readRequestReturnsRequestInListForm() throws IOException {
         String request = "GET /simple_get HTTP/1.1";
         StringReader stringReader = new StringReader(request);
         BufferedReader bufferedReader = new BufferedReader(stringReader);
@@ -24,7 +24,7 @@ public class RequestParserTest {
     }
 
     @Test
-    public void ItReturnsRequestLineGivenFullRequest() {
+    public void parseReturnsStringArrayOfRequestLineGivenFullRequest() {
         RequestParser parser = new RequestParser();
         List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
         String[] actual = parser.parse(requestList);
@@ -36,7 +36,7 @@ public class RequestParserTest {
     }
 
     @Test
-    public void ItReturnsUriGivenRequestLine() {
+    public void getUriReturnsUriGivenRequestLine() {
         RequestParser parser = new RequestParser();
         List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
         String[] requestLine = parser.parse(requestList);
@@ -46,7 +46,7 @@ public class RequestParserTest {
     }
 
     @Test
-    public void ItReturnsMethodGivenRequestLine() {
+    public void getMethodReturnsMethodGivenRequestLine() {
         RequestParser parser = new RequestParser();
         List<String> requestList = Arrays.asList("GET /simple_get HTTP/1.1");
         String[] requestLine = parser.parse(requestList);

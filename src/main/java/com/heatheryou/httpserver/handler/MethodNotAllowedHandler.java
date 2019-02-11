@@ -12,7 +12,7 @@ import java.util.List;
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_405;
 
-public class MethodNotAllowedHandler implements IHandler {
+public class MethodNotAllowedHandler implements RequestHandler {
     private Router router;
 
     @Override
@@ -24,7 +24,7 @@ public class MethodNotAllowedHandler implements IHandler {
     }
 
     private String getAllowedMethods(Request request) {
-        return EntityHeader.ALLOWED_METHODS + CharacterSet.SP + getAllowedMethodsList(request) + CharacterSet.CRLF;
+        return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList(request) + CharacterSet.CRLF;
     }
 
     private String getAllowedMethodsList(Request request) {
@@ -34,7 +34,7 @@ public class MethodNotAllowedHandler implements IHandler {
     }
 
     private String getContentLength() {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
 

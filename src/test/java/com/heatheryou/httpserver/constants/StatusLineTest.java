@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class StatusLineTest {
     @Test
-    public void ItReturnsAStatusLineProvidedAStatusCode() {
+    public void getReasonPhraseReturnsCorrectReasonPhraseProvidedAStatusCode() {
         StatusLine statusLine = new StatusLine();
 
         String actual = statusLine.getReasonPhrase(STATUS_CODE_200);

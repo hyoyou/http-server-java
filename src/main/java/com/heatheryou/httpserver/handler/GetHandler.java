@@ -9,7 +9,7 @@ import com.heatheryou.httpserver.constants.EntityHeader;
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
 
-public class GetHandler implements IHandler {
+public class GetHandler implements RequestHandler {
     @Override
     public Response handle(Request request) {
         ResponseBuilder responseBuilder = new ResponseBuilder();
@@ -19,6 +19,6 @@ public class GetHandler implements IHandler {
     }
 
     private String getContentLength() {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }

@@ -20,7 +20,7 @@ public class ServerTest {
     }
 
     @Test
-    public void ServerAnswersSimpleGet() {
+    public void serverAnswersSimpleGet() {
         String requestLine = "GET /simple_get HTTP/1.1";
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader bufferedReader = new BufferedReader(stringReader);
@@ -45,7 +45,7 @@ public class ServerTest {
     }
 
     @Test
-    public void ServerAnswersSimpleOptions() {
+    public void serverAnswersSimpleOptions() {
         String requestLine = "OPTIONS /method_options HTTP/1.1";
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader bufferedReader = new BufferedReader(stringReader);

@@ -31,9 +31,7 @@ public class RequestParser {
         return requestString.split(" ");
     }
 
-    public String getMethod(String[] requestLine) {
-        return requestLine[0];
-    }
+    public String getMethod(String[] requestLine) { return requestLine[0]; }
 
     public String getUri(String[] requestLine) {
         return requestLine[1];

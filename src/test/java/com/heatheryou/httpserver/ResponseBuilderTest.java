@@ -17,7 +17,7 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ItSetsTheStatusLineGivenStatusCode() {
+    public void setStatusLineSetsTheStatusLineGivenStatusCode() {
         builder.setStatusLine(STATUS_CODE_200);
         String actual = builder.getStatusLine();
         String expected = "HTTP/1.1 200 OK" + CharacterSet.CRLF;
@@ -25,8 +25,8 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ItSetsTheEntityHeadersWhenEntityHeadersArePassedInAsStringArray() {
-        String contentLength = EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+    public void setEntityHeaderSetsTheEntityHeadersWhenEntityHeadersArePassedInAsStringArray() {
+        String contentLength = EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
         String[] entityArray = new String[]{contentLength};
         builder.setEntityHeader(entityArray);
         String actual = builder.getEntityHeader();
@@ -35,9 +35,9 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ItReturnsFullHeaderWhenStatusLineAndEntityHeadersAreSet() {
+    public void getHeaderReturnsFullHeaderWhenStatusLineAndEntityHeadersAreSet() {
         builder.setStatusLine(STATUS_CODE_200);
-        String contentLength = EntityHeader.CONTENT_LENGTH + CharacterSet.SP + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        String contentLength = EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
         String[] entityArray = new String[]{contentLength};
         builder.setEntityHeader(entityArray);
         builder.setHeader();
@@ -51,7 +51,7 @@ public class ResponseBuilderTest {
     }
 
     @Test
-    public void ItReturnsEmptyBodyWhenThereIsNoBody() {
+    public void getBodyReturnsEmptyBodyWhenThereIsNoBody() {
         builder.setBody(CharacterSet.EMPTY);
         String actual = builder.getBody();
         String expected = CharacterSet.CRLF;

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RequestTest {
     @Test
-    public void ItReturnsTheMethod() {
+    public void getMethodReturnsTheMethod() {
         Request request = new Request("/simple_get", "GET");
         String actual = request.getMethod();
         String expected = "GET";
@@ -14,7 +14,7 @@ public class RequestTest {
     }
 
     @Test
-    public void ItReturnsTheUri() {
+    public void getUriReturnsTheUri() {
         Request request = new Request("/simple_get", "GET");
         String actual = request.getUri();
         String expected = "/simple_get";

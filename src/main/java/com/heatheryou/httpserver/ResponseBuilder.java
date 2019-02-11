@@ -1,10 +1,7 @@
 package com.heatheryou.httpserver;
 
-import com.heatheryou.httpserver.constants.EntityHeader;
 import com.heatheryou.httpserver.constants.StatusLine;
 import com.heatheryou.httpserver.constants.CharacterSet;
-
-import java.util.Arrays;
 
 public class ResponseBuilder {
     String header;
@@ -31,7 +28,7 @@ public class ResponseBuilder {
     }
 
     public void setStatusLine(int statusCode) {
-        statusLine = StatusLine.HTTP_VERSION + CharacterSet.SP + statusCode + CharacterSet.SP +
+        statusLine = StatusLine.HTTP_VERSION + CharacterSet.SPACE + statusCode + CharacterSet.SPACE +
                 StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF;
     }
 
