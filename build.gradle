@@ -1,8 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'maven'
-    id 'war'
 }
 
 application {
@@ -19,23 +17,4 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
-task writePom {
-    pom {
-        project {
-            groupId 'com.heatheryou.httpserver'
-            artifactId 'http-server'
-            version '1.0.0'
-
-            inceptionYear '2019'
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-        }
-    }.writeTo("pom.xml")
 }
