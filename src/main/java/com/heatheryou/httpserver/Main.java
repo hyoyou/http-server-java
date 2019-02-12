@@ -1,15 +1,21 @@
 package com.heatheryou.httpserver;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        System.out.println(args);
+        if (args.length != 1) {
+            System.err.println("Usage: java HTTPServer <port number>");
+            System.exit(1);
+        }
+
+        System.out.println(Arrays.toString(args));
         while (true) {
             Router router = new Router();
             RequestParser parser = new RequestParser();
             ResponseBuilder builder = new ResponseBuilder();
-            int port = 5000;
+            int port = Integer.parseInt(args[0]);
 
             try (
                     ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(port);
