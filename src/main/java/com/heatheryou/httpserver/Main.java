@@ -6,11 +6,11 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws IOException {
         if (args.length != 1) {
+            System.out.println(Arrays.toString(args));
             System.err.println("Usage: java HTTPServer <port number>");
             System.exit(1);
         }
 
-        System.out.println(Arrays.toString(args));
         while (true) {
             Router router = new Router();
             RequestParser parser = new RequestParser();
