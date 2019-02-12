@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -DTG_ENV=prod -jar webapp-runner.jar --port $PORT build/libs/*.war
+web: java -jar build/libs/http-server-1.0-SNAPSHOT.jar
