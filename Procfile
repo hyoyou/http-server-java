@@ -1,1 +1,1 @@
-web: java -jar build/libs/http-server-1.0-SNAPSHOT.jar
+web: java $PORT -jar build/libs/http-server-1.0-SNAPSHOT.jar
