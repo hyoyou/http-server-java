@@ -7,6 +7,11 @@ out/
 # Gradle
 .gradle
 .idea
-build
+build/classes
+build/distributions
+build/reports
+build/scripts
+build/test-results
+build/tmp
 
 .DS_Store
