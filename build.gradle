@@ -24,6 +24,7 @@ dependencies {
 task writePom {
     pom {
         project {
+            groupId 'com.heatheryou.httpserver'
             artifactId 'http-server'
             version '1.0.0'
 
