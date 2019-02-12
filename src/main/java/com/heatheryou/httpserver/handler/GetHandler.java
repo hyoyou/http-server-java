@@ -19,7 +19,6 @@ public class GetHandler implements RequestHandler {
     }
 
     private String getContentLength() {
-        System.out.println("Getting content length...");
         return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
