@@ -28,12 +28,12 @@ public class ResponseBuilder {
         entityHeader = String.join("", entityHeaders);
     }
 
-    private void setBody(String content) {
-        body = content + CharacterSet.CRLF;
-    }
-
     private void setHeader() {
         header = getStatusLine() + getEntityHeader();
+    }
+
+    private void setBody(String content) {
+        body = content + CharacterSet.CRLF;
     }
 
     public String getStatusLine() {
