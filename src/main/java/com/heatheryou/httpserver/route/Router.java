@@ -13,6 +13,7 @@ public class Router {
         routeMap.put("/method_options2", new ArrayList<>(Arrays.asList("POST","PUT","OPTIONS","HEAD","GET")));
         routeMap.put("/get_with_body", new ArrayList<>(Arrays.asList("OPTIONS","HEAD")));
         routeMap.put("/simple_get", new ArrayList<>(Arrays.asList("GET","HEAD")));
+        routeMap.put("/redirect", new ArrayList<>(Arrays.asList("GET")));
     }
 
     public static Map<String, RequestHandler> handlerMap;
