@@ -1,8 +1,9 @@
 package com.heatheryou.httpserver;
 
-import com.heatheryou.httpserver.handler.RequestHandler;
-import com.heatheryou.httpserver.handler.MethodNotAllowedHandler;
-import com.heatheryou.httpserver.handler.NoRouteFoundHandler;
+import com.heatheryou.httpserver.route.RequestHandler;
+import com.heatheryou.httpserver.route.handler.MethodNotAllowedHandler;
+import com.heatheryou.httpserver.route.handler.NoRouteFoundHandler;
+import com.heatheryou.httpserver.route.Router;
 import org.junit.Test;
 
 import java.util.Arrays;
