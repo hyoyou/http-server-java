@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Router {
 
-    public static Map<String, ArrayList<String>> routeMap;
+    private static Map<String, ArrayList<String>> routeMap;
     static {
         routeMap = new HashMap<>();
         routeMap.put("/method_options", new ArrayList<>(Arrays.asList("OPTIONS","HEAD","GET")));
@@ -17,28 +17,12 @@ public class Router {
         routeMap.put("/redirect", new ArrayList<>(Arrays.asList("GET")));
     }
 
-    public static Map<String, RequestHandler> handlerMap;
+    private static Map<String, RequestHandler> handlerMap;
     static {
         handlerMap = new HashMap<>();
         handlerMap.put("OPTIONS", new OptionsHandler());
         handlerMap.put("GET", new GetHandler());
         handlerMap.put("HEAD", new GetHandler());
-    }
-
-    public boolean isValidRequest(String uri, String method) {
-        if (allowedMethods(uri) != null) {
-            List<String> methodList = allowedMethods(uri);
-            return methodList.contains(method);
-        }
-        return false;
-    }
-
-    public List<String> allowedMethods(String uri) {
-        return routeMap.get(uri);
-    }
-
-    public boolean isValidRoute(String uri) {
-        return routeMap.containsKey(uri);
     }
 
     public RequestHandler handleRequest(Request request) {
@@ -52,7 +36,24 @@ public class Router {
         return new NoRouteFoundHandler();
     }
 
+
+    private boolean isValidRequest(String uri, String method) {
+        if (allowedMethods(uri) != null) {
+            List<String> methodList = allowedMethods(uri);
+            return methodList.contains(method);
+        }
+        return false;
+    }
+
+    public List<String> allowedMethods(String uri) {
+        return routeMap.get(uri);
+    }
+
     private RequestHandler getHandler(String method) {
         return handlerMap.get(method);
+    }
+
+    private boolean isValidRoute(String uri) {
+        return routeMap.containsKey(uri);
     }
 }

@@ -19,13 +19,18 @@ public class GetHandler implements RequestHandler {
 
         String uri = request.getUri();
         if (uri.equals("/redirect")) {
-            entityHeaders = new String[]{ getLocation(), getContentLength() };
-            return responseBuilder.buildResponse(STATUS_CODE_301, entityHeaders, EMPTY);
+            return redirectResponse(responseBuilder);
         }
         return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
     }
 
-    public String getLocation() {
+    private Response redirectResponse(ResponseBuilder responseBuilder) {
+        String[] entityHeaders;
+        entityHeaders = new String[]{ getLocation(), getContentLength() };
+        return responseBuilder.buildResponse(STATUS_CODE_301, entityHeaders, EMPTY);
+    }
+
+    private String getLocation() {
         return EntityHeader.LOCATION + CharacterSet.SPACE + EntityHeader.SIMPLE_GET_URL + CharacterSet.CRLF;
     }
 

@@ -12,43 +12,39 @@ public class ResponseBuilder {
     public Response buildResponse(int statusCode, String[] entityHeaders, String content) {
         setStatusLine(statusCode);
         setEntityHeader(entityHeaders);
+        setHeader();
         setBody(content);
         String header = getHeader();
         String body = getBody();
         return new Response(header, body);
     }
 
-    public void setHeader() {
-        header = getStatusLine() + getEntityHeader();
-    }
-
-    public String getHeader() {
-        setHeader();
-        return header;
-    }
-
-    public void setStatusLine(int statusCode) {
+    private void setStatusLine(int statusCode) {
         statusLine = StatusLine.HTTP_VERSION + CharacterSet.SPACE + statusCode + CharacterSet.SPACE +
                 StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF;
+    }
+
+    private void setEntityHeader(String[] entityHeaders) {
+        entityHeader = String.join("", entityHeaders);
+    }
+
+    private void setBody(String content) {
+        body = content + CharacterSet.CRLF;
+    }
+
+    private void setHeader() {
+        header = getStatusLine() + getEntityHeader();
     }
 
     public String getStatusLine() {
         return statusLine;
     }
 
-    public void setEntityHeader(String[] entityHeaders) {
-        entityHeader = String.join("", entityHeaders);
-    }
-
     public String getEntityHeader() {
         return entityHeader;
     }
 
-    public void setBody(String content) {
-        body = content + CharacterSet.CRLF;
-    }
+    public String getHeader() { return header; }
 
-    public String getBody() {
-        return body;
-    }
+    public String getBody() { return body; }
 }

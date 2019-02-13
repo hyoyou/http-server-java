@@ -7,16 +7,20 @@ import java.util.List;
 
 public class RequestParser {
     private List<String> requestList;
+    String method;
+    String uri;
 
     public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
-        String uri = getUri(requestLine);
-        String method = getMethod(requestLine);
+        setUri(requestLine);
+        setMethod(requestLine);
+        String uri = getUri();
+        String method = getMethod();
         return new Request(uri, method);
     }
 
-    public List<String> readRequest(BufferedReader requestReader) throws IOException {
+    private List<String> readRequest(BufferedReader requestReader) throws IOException {
         requestList = new ArrayList<>();
         String inputLine = requestReader.readLine();
         while (inputLine != null && inputLine.length() > 0) {
@@ -26,15 +30,23 @@ public class RequestParser {
         return requestList;
     }
 
-    public String[] parse(List<String> requestList) {
+    private String[] parse(List<String> requestList) {
         String requestString = requestList.get(0);
         return requestString.split(" ");
     }
 
-    public String getMethod(String[] requestLine) { return requestLine[0]; }
+    private void setMethod(String[] requestLine) {
+        method = requestLine[0];
+    }
 
-    public String getUri(String[] requestLine) {
-        return requestLine[1];
+    private void setUri(String[] requestLine) {
+        uri = requestLine[1];
+    }
+
+    public String getMethod() { return method; }
+
+    public String getUri() {
+        return uri;
     }
 
 }

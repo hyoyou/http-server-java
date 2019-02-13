@@ -24,17 +24,17 @@ public class OptionsHandler implements RequestHandler {
         return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
     }
 
-    public String getAllowedMethods(Request request) {
+    private String getAllowedMethods(Request request) {
         return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList(request) + CharacterSet.CRLF;
     }
 
-    public String getAllowedMethodsList(Request request) {
+    private String getAllowedMethodsList(Request request) {
         router = new Router();
         List<String> allowedMethods = router.allowedMethods(request.getUri());
         return String.join(",", allowedMethods);
     }
 
-    public String getContentLength() {
+    private String getContentLength() {
         return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }

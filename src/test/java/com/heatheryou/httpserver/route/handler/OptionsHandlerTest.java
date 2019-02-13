@@ -1,6 +1,7 @@
 package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
+import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;
 import org.junit.Test;
@@ -9,28 +10,19 @@ import static org.junit.Assert.assertEquals;
 
 public class OptionsHandlerTest {
     @Test
-    public void getAllowedMethodsListIsAbleToRetrieveAListOfAllowedMethodsProvidedTheRequest() {
+    public void optionsHandlerReturnsResponseThatIncludesAllowedMethods() {
         OptionsHandler handler = new OptionsHandler();
-        Request request = new Request("/simple_get", "GET");
-        String actual = handler.getAllowedMethodsList(request);
-        String expected = "GET,HEAD";
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void getAllowedMethodsIsAbleToBuildEntityHeaderAllowedMethodsProvidedTheRequest() {
-        OptionsHandler handler = new OptionsHandler();
-        Request request = new Request("/simple_get", "GET");
-        String actual = handler.getAllowedMethods(request);
-        String expected = EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + "GET,HEAD" + CharacterSet.CRLF;
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void getContentLengthIsAbleToPrintOutContentLengthEntityHeader() {
-        OptionsHandler handler = new OptionsHandler();
-        String actual = handler.getContentLength();
-        String expected = EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        Request request = new Request("/method_options", "OPTIONS");
+        Response response = handler.handle(request);
+        String actual = response.getResponseLine();
+        String expected = String.join("\r\n", new String[]{
+                "HTTP/1.1 200 OK",
+                "Allow: OPTIONS,HEAD,GET",
+                "Content-Length: 0",
+                "",
+                "",
+                ""
+        });
         assertEquals(expected, actual);
     }
 }

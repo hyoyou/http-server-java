@@ -8,14 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 public class GetHandlerTest {
     @Test
-    public void getLocationReturnsLocationHeaderWithSimpleGetUri() {
-        GetHandler handler = new GetHandler();
-        String actual = handler.getLocation();
-        String expected = "Location: http://0.0.0.0:5000/simple_get\r\n";
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
         GetHandler handler = new GetHandler();
         Request request = new Request("/redirect", "GET");
