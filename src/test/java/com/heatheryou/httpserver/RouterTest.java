@@ -1,8 +1,10 @@
 package com.heatheryou.httpserver;
 
-import com.heatheryou.httpserver.handler.RequestHandler;
-import com.heatheryou.httpserver.handler.MethodNotAllowedHandler;
-import com.heatheryou.httpserver.handler.NoRouteFoundHandler;
+import com.heatheryou.httpserver.route.RequestHandler;
+import com.heatheryou.httpserver.route.handler.GetHandler;
+import com.heatheryou.httpserver.route.handler.MethodNotAllowedHandler;
+import com.heatheryou.httpserver.route.handler.NoRouteFoundHandler;
+import com.heatheryou.httpserver.route.Router;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -21,38 +23,11 @@ public class RouterTest {
     }
 
     @Test
-    public void isValidRequestReturnsTrueIfRequestedMethodAndUriAreSupported() {
+    public void handleRequestReturnsGetHandlerIfValidUriWithGETMethodRequested() {
         Router router = new Router();
-        boolean actual = router.isValidRequest("/simple_get", "HEAD");
-        assertTrue(actual);
-    }
-
-    @Test
-    public void isValidRequestReturnsFalseIfRequestedUriIsValidButMethodNotSupported() {
-        Router router = new Router();
-        boolean actual = router.isValidRequest("/simple_get", "POST");
-        assertFalse(actual);
-    }
-
-    @Test
-    public void isValidRequestReturnsFalseIfRequestedUriAndMethodNotSupported() {
-        Router router = new Router();
-        boolean actual = router.isValidRequest("/invalid_uri", "POST");
-        assertFalse(actual);
-    }
-
-    @Test
-    public void isValidRouteReturnsTrueIfValidUriIsRequested() {
-        Router router = new Router();
-        boolean actual = router.isValidRoute("/simple_get");
-        assertTrue(actual);
-    }
-
-    @Test
-    public void isValidRouteReturnsFalseIfInvalidUriIsRequested() {
-        Router router = new Router();
-        boolean actual = router.isValidRoute("/invalid_uri");
-        assertFalse(actual);
+        Request request = new Request("/simple_get", "GET");
+        RequestHandler actual = router.handleRequest(request);
+        assertThat(actual, instanceOf(GetHandler.class));
     }
 
     @Test

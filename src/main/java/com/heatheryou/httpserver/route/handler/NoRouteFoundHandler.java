@@ -1,10 +1,11 @@
-package com.heatheryou.httpserver.handler;
+package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.ResponseBuilder;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;
+import com.heatheryou.httpserver.route.RequestHandler;
 
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_404;

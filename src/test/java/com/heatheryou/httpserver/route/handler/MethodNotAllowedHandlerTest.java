@@ -1,4 +1,4 @@
-package com.heatheryou.httpserver.handler;
+package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
@@ -6,16 +6,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class NoRouteFoundHandlerTest {
+public class MethodNotAllowedHandlerTest {
 
     @Test
-    public void noRouteFoundHandlerReturnsStatusCode404AndAnEmptyBody() {
-        NoRouteFoundHandler handler = new NoRouteFoundHandler();
-        Request request = new Request("/invalid_route", "GET");
+    public void methodNotAllowedHandlerReturnsStatusCode405AndAnEmptyBody() {
+        MethodNotAllowedHandler handler = new MethodNotAllowedHandler();
+        Request request = new Request("/simple_get", "OPTIONS");
         Response response = handler.handle(request);
         String actual = response.getResponseLine();
         String expected = String.join("\r\n", new String[]{
-                "HTTP/1.1 404 Not Found",
+                "HTTP/1.1 405 Method Not Allowed",
+                "Allow: GET,HEAD",
                 "Content-Length: 0",
                 "",
                 "",

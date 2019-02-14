@@ -1,18 +1,19 @@
-package com.heatheryou.httpserver.handler;
+package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.ResponseBuilder;
-import com.heatheryou.httpserver.Router;
+import com.heatheryou.httpserver.route.Router;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;
+import com.heatheryou.httpserver.route.RequestHandler;
 
 import java.util.List;
 
 import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
-import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
+import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_405;
 
-public class OptionsHandler implements RequestHandler {
+public class MethodNotAllowedHandler implements RequestHandler {
     private Router router;
 
     @Override
@@ -20,20 +21,21 @@ public class OptionsHandler implements RequestHandler {
         ResponseBuilder responseBuilder = new ResponseBuilder();
         String[] entityHeaders = new String[]{ getAllowedMethods(request), getContentLength() };
 
-        return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
+        return responseBuilder.buildResponse(STATUS_CODE_405, entityHeaders, EMPTY);
     }
 
-    public String getAllowedMethods(Request request) {
+    private String getAllowedMethods(Request request) {
         return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList(request) + CharacterSet.CRLF;
     }
 
-    public String getAllowedMethodsList(Request request) {
+    private String getAllowedMethodsList(Request request) {
         router = new Router();
         List<String> allowedMethods = router.allowedMethods(request.getUri());
         return String.join(",", allowedMethods);
     }
 
-    public String getContentLength() {
+    private String getContentLength() {
         return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
+
