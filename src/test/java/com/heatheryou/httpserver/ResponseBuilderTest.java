@@ -48,11 +48,4 @@ public class ResponseBuilderTest {
         });
         assertEquals(expected, actual);
     }
-
-    @Test
-    public void getBodyReturnsBody() {
-        String actual = builder.getBody();
-        String expected = "\r\n";
-        assertEquals(expected, actual);
-    }
 }
