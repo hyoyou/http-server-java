@@ -1,14 +1,16 @@
-package com.heatheryou.httpserver;
+package com.heatheryou.httpserver.route.handler;
 
+import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.constants.StatusLine;
 import com.heatheryou.httpserver.constants.CharacterSet;
 
-public class ResponseBuilder {
+public class ResponseBuilder implements IResponseBuilder {
     String header;
     String body;
     String statusLine;
     String entityHeader;
 
+    @Override
     public Response buildResponse(int statusCode, String[] entityHeaders, String content) {
         setStatusLine(statusCode);
         setEntityHeader(entityHeaders);
