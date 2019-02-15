@@ -11,13 +11,11 @@ public class Server implements AutoCloseable {
     private IServerSocketWrapper serverSocketWrapper;
     private Router router;
     private RequestParser parser;
-    private ResponseBuilder builder;
 
-    public Server(IServerSocketWrapper serverSocketWrapper, Router router, RequestParser parser, ResponseBuilder builder) {
+    public Server(IServerSocketWrapper serverSocketWrapper, Router router, RequestParser parser) {
         this.serverSocketWrapper = serverSocketWrapper;
         this.router = router;
         this.parser = parser;
-        this.builder = builder;
     }
 
     public void start() {

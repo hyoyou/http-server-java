@@ -11,19 +11,24 @@ import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_301;
 
 public class GetHandler implements RequestHandler {
+    BuildResponse responseBuilder;
+
+    public GetHandler(BuildResponse responseBuilder) {
+        this.responseBuilder = responseBuilder;
+    }
+
     @Override
     public Response handle(Request request) {
-        ResponseBuilder responseBuilder = new ResponseBuilder();
         String[] entityHeaders = new String[]{ getContentLength() };
 
         String uri = request.getUri();
         if (uri.equals("/redirect")) {
-            return redirectResponse(responseBuilder);
+            return redirectResponse();
         }
         return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
     }
 
-    private Response redirectResponse(ResponseBuilder responseBuilder) {
+    private Response redirectResponse() {
         String[] entityHeaders;
         entityHeaders = new String[]{ getLocation(), getContentLength() };
         return responseBuilder.buildResponse(STATUS_CODE_301, entityHeaders, EMPTY);

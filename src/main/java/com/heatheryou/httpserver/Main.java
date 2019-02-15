@@ -1,6 +1,7 @@
 package com.heatheryou.httpserver;
 
 import com.heatheryou.httpserver.route.Router;
+import com.heatheryou.httpserver.route.handler.BuildResponse;
 import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 import java.io.IOException;
@@ -15,14 +16,14 @@ public class Main {
         }
 
         while (true) {
-            Router router = new Router();
+            BuildResponse buildResponse = new ResponseBuilder();
+            Router router = new Router(buildResponse);
             RequestParser parser = new RequestParser();
-            ResponseBuilder builder = new ResponseBuilder();
             int port = Integer.parseInt(args[0]);
 
             try (
                     ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(port);
-                    Server server = new Server(serverSocketWrapper, router, parser, builder)
+                    Server server = new Server(serverSocketWrapper, router, parser)
             ) {
                 server.start();
             } catch (Exception e) {

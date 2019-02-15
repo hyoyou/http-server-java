@@ -6,6 +6,7 @@ import com.heatheryou.httpserver.route.handler.*;
 import java.util.*;
 
 public class Router {
+    private static BuildResponse buildResponse;
 
     private static Map<String, ArrayList<String>> routeMap;
     static {
@@ -15,14 +16,18 @@ public class Router {
         routeMap.put("/get_with_body", new ArrayList<>(Arrays.asList("OPTIONS","HEAD")));
         routeMap.put("/simple_get", new ArrayList<>(Arrays.asList("GET","HEAD")));
         routeMap.put("/redirect", new ArrayList<>(Arrays.asList("GET")));
+        routeMap.put("/echo_body", new ArrayList<>(Arrays.asList("POST")));
     }
 
-    private static Map<String, RequestHandler> handlerMap;
-    static {
+    private Map<String, RequestHandler> handlerMap;
+
+    public Router(BuildResponse buildResponse) {
+        this.buildResponse = buildResponse;
         handlerMap = new HashMap<>();
-        handlerMap.put("OPTIONS", new OptionsHandler());
-        handlerMap.put("GET", new GetHandler());
-        handlerMap.put("HEAD", new GetHandler());
+        handlerMap.put("OPTIONS", new OptionsHandler(buildResponse));
+        handlerMap.put("GET", new GetHandler(buildResponse));
+        handlerMap.put("HEAD", new GetHandler(buildResponse));
+        handlerMap.put("POST", new GetHandler(buildResponse));
     }
 
     public RequestHandler handleRequest(Request request) {
@@ -31,7 +36,7 @@ public class Router {
         if (isValidRequest(uri, method)) {
             return getHandler(method);
         } else if (isValidRoute(uri)){
-            return new MethodNotAllowedHandler();
+            return new MethodNotAllowedHandler(buildResponse);
         }
         return new NoRouteFoundHandler();
     }

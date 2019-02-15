@@ -14,10 +14,14 @@ import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_405;
 
 public class MethodNotAllowedHandler implements RequestHandler {
     private Router router;
+    private BuildResponse responseBuilder;
+
+    public MethodNotAllowedHandler(BuildResponse buildResponse) {
+        this.responseBuilder = buildResponse;
+    }
 
     @Override
     public Response handle(Request request) {
-        ResponseBuilder responseBuilder = new ResponseBuilder();
         String[] entityHeaders = new String[]{ getAllowedMethods(request), getContentLength() };
 
         return responseBuilder.buildResponse(STATUS_CODE_405, entityHeaders, EMPTY);
@@ -28,7 +32,7 @@ public class MethodNotAllowedHandler implements RequestHandler {
     }
 
     private String getAllowedMethodsList(Request request) {
-        router = new Router();
+        router = new Router(responseBuilder);
         List<String> allowedMethods = router.allowedMethods(request.getUri());
         return String.join(",", allowedMethods);
     }

@@ -1,6 +1,7 @@
 package com.heatheryou.httpserver;
 
 import com.heatheryou.httpserver.route.Router;
+import com.heatheryou.httpserver.route.handler.BuildResponse;
 import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,13 +13,13 @@ import static org.junit.Assert.assertEquals;
 public class ServerTest {
     private Router router;
     private RequestParser parser;
-    private ResponseBuilder builder;
+    private BuildResponse buildResponse;
 
     @Before
     public void setUp() throws Exception {
-        router = new Router();
+        buildResponse = new ResponseBuilder();
+        router = new Router(buildResponse);
         parser = new RequestParser();
-        builder = new ResponseBuilder();
     }
 
     @Test
@@ -30,7 +31,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper, router, parser, builder);
+        Server server = new Server(mockServerSocketWrapper, router, parser);
 
         server.start();
 
@@ -55,7 +56,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper, router, parser, builder);
+        Server server = new Server(mockServerSocketWrapper, router, parser);
 
         server.start();
 

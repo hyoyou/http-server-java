@@ -9,7 +9,8 @@ import static org.junit.Assert.assertEquals;
 public class GetHandlerTest {
     @Test
     public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
-        GetHandler handler = new GetHandler();
+        BuildResponse buildResponse = new ResponseBuilder();
+        GetHandler handler = new GetHandler(buildResponse);
         Request request = new Request("/redirect", "GET");
         Response response = handler.handle(request);
         String actual = response.getResponseLine();

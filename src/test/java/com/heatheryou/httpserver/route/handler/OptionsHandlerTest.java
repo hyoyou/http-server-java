@@ -11,7 +11,8 @@ import static org.junit.Assert.assertEquals;
 public class OptionsHandlerTest {
     @Test
     public void optionsHandlerReturnsResponseThatIncludesAllowedMethods() {
-        OptionsHandler handler = new OptionsHandler();
+        BuildResponse buildResponse = new ResponseBuilder();
+        OptionsHandler handler = new OptionsHandler(buildResponse);
         Request request = new Request("/method_options", "OPTIONS");
         Response response = handler.handle(request);
         String actual = response.getResponseLine();

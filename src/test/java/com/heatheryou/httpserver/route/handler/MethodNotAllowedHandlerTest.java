@@ -9,7 +9,8 @@ import static org.junit.Assert.assertEquals;
 public class MethodNotAllowedHandlerTest {
     @Test
     public void methodNotAllowedHandlerReturnsStatusCode405AndAnEmptyBody() {
-        MethodNotAllowedHandler handler = new MethodNotAllowedHandler();
+        BuildResponse buildResponse = new ResponseBuilder();
+        MethodNotAllowedHandler handler = new MethodNotAllowedHandler(buildResponse);
         Request request = new Request("/simple_get", "OPTIONS");
         Response response = handler.handle(request);
         String actual = response.getResponseLine();
