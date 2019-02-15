@@ -4,7 +4,7 @@ import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.constants.StatusLine;
 import com.heatheryou.httpserver.constants.CharacterSet;
 
-public class ResponseBuilder implements IResponseBuilder {
+public class ResponseBuilder implements BuildResponse {
     String header;
     String body;
     String statusLine;

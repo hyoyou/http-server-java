@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MethodNotAllowedHandlerTest {
-
     @Test
     public void methodNotAllowedHandlerReturnsStatusCode405AndAnEmptyBody() {
         MethodNotAllowedHandler handler = new MethodNotAllowedHandler();

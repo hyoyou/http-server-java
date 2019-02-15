@@ -45,13 +45,9 @@ public class Router {
         return false;
     }
 
-    public List<String> allowedMethods(String uri) {
-        return routeMap.get(uri);
-    }
+    public List<String> allowedMethods(String uri) { return routeMap.get(uri); }
 
-    private RequestHandler getHandler(String method) {
-        return handlerMap.get(method);
-    }
+    private RequestHandler getHandler(String method) { return handlerMap.get(method); }
 
     private boolean isValidRoute(String uri) {
         return routeMap.containsKey(uri);

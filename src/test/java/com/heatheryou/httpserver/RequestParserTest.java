@@ -28,7 +28,7 @@ public class RequestParserTest {
         Request request = parser.processRequest(bufferedReader);
         String[] actual = new String[]{ request.getUri(), request.getMethod() };
         String[] expected = new String[]{"/simple_get", "GET"};
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test

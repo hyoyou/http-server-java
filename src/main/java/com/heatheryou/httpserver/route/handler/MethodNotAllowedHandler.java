@@ -2,7 +2,6 @@ package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
-import com.heatheryou.httpserver.ResponseBuilder;
 import com.heatheryou.httpserver.route.Router;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;

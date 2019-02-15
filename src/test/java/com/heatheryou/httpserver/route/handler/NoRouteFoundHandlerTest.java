@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class NoRouteFoundHandlerTest {
-
     @Test
     public void noRouteFoundHandlerReturnsStatusCode404AndAnEmptyBody() {
         NoRouteFoundHandler handler = new NoRouteFoundHandler();
