@@ -1,5 +1,7 @@
 package com.heatheryou.httpserver;
 
+import com.heatheryou.httpserver.constants.CharacterSet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,9 +17,7 @@ public class RequestParser {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
         int contentLength = getContentLength(requestList);
-        if (contentLength > 0) {
-            setBody(requestReader, contentLength);
-        }
+        setBody(requestReader, contentLength);
         setUri(requestLine);
         setMethod(requestLine);
         String uri = getUri();
@@ -64,8 +64,12 @@ public class RequestParser {
     }
 
     private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
-        char[] charArray = readBody(requestReader, contentLength);
-        body = new String(charArray);
+        if (contentLength == 0) {
+            body = CharacterSet.EMPTY;
+        } else {
+            char[] charArray = readBody(requestReader, contentLength);
+            body = new String(charArray);
+        }
     }
 
     private char[] readBody(BufferedReader requestReader, int contentLength) throws IOException {

@@ -19,18 +19,19 @@ public class GetHandler implements RequestHandler {
 
     @Override
     public Response handle(Request request) {
-        String[] entityHeaders = new String[]{ getContentLength() };
+        String body = request.getBody();
+        String[] entityHeaders = new String[]{ getContentLength(body) };
 
         String uri = request.getUri();
         if (uri.equals("/redirect")) {
-            return redirectResponse();
+            return redirectResponse(body);
         }
         return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
     }
 
-    private Response redirectResponse() {
+    private Response redirectResponse(String body) {
         String[] entityHeaders;
-        entityHeaders = new String[]{ getLocation(), getContentLength() };
+        entityHeaders = new String[]{ getLocation(), getContentLength(body) };
         return responseBuilder.buildResponse(STATUS_CODE_301, entityHeaders, EMPTY);
     }
 
@@ -38,7 +39,7 @@ public class GetHandler implements RequestHandler {
         return EntityHeader.LOCATION + CharacterSet.SPACE + EntityHeader.SIMPLE_GET_URL + CharacterSet.CRLF;
     }
 
-    private String getContentLength() {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+    private String getContentLength(String body) {
+        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + body.length() + CharacterSet.CRLF;
     }
 }

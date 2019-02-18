@@ -11,7 +11,7 @@ public class GetHandlerTest {
     public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
         BuildResponse buildResponse = new ResponseBuilder();
         GetHandler handler = new GetHandler(buildResponse);
-        Request request = new Request("/redirect", "GET", null);
+        Request request = new Request("/redirect", "GET", "");
         Response response = handler.handle(request);
         String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
