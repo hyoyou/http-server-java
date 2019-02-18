@@ -36,7 +36,8 @@ public class Router {
         if (isValidRequest(uri, method)) {
             return getHandler(method);
         } else if (isValidRoute(uri)){
-            return new MethodNotAllowedHandler(buildResponse);
+            List<String> allowedMethods = allowedMethods(uri);
+            return new MethodNotAllowedHandler(buildResponse, allowedMethods);
         }
         return new NoRouteFoundHandler(buildResponse);
     }

@@ -4,13 +4,18 @@ import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class MethodNotAllowedHandlerTest {
     @Test
     public void methodNotAllowedHandlerReturnsStatusCode405AndAnEmptyBody() {
         BuildResponse buildResponse = new ResponseBuilder();
-        MethodNotAllowedHandler handler = new MethodNotAllowedHandler(buildResponse);
+        List<String> allowedMethods = new ArrayList<>(Arrays.asList("GET","HEAD"));
+        MethodNotAllowedHandler handler = new MethodNotAllowedHandler(buildResponse, allowedMethods);
         Request request = new Request("/simple_get", "OPTIONS", null);
         Response response = handler.handle(request);
         String actual = response.getResponse();
