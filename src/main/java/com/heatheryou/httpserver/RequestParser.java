@@ -9,21 +9,16 @@ import java.util.List;
 
 public class RequestParser {
     private List<String> requestList;
-    String method;
     String uri;
+    String method;
     String body;
 
     public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
         int contentLength = getContentLength(requestList);
-        setBody(requestReader, contentLength);
-        setUri(requestLine);
-        setMethod(requestLine);
-        String uri = getUri();
-        String method = getMethod();
-        String body = getBody();
-        return new Request(uri, method, body);
+        setRequest(requestReader, requestLine, contentLength);
+        return getRequest();
     }
 
     private List<String> readRequest(BufferedReader requestReader) throws IOException {
@@ -55,12 +50,18 @@ public class RequestParser {
         return contentLength;
     }
 
-    private void setMethod(String[] requestLine) {
-        method = requestLine[0];
+    private void setRequest(BufferedReader requestReader, String[] requestLine, int contentLength) throws IOException {
+        setUri(requestLine);
+        setMethod(requestLine);
+        setBody(requestReader, contentLength);
     }
 
     private void setUri(String[] requestLine) {
         uri = requestLine[1];
+    }
+
+    private void setMethod(String[] requestLine) {
+        method = requestLine[0];
     }
 
     private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
@@ -78,9 +79,16 @@ public class RequestParser {
         return charArray;
     }
 
-    public String getMethod() { return method; }
+    private Request getRequest() {
+        String uri = getUri();
+        String method = getMethod();
+        String body = getBody();
+        return new Request(uri, method, body);
+    }
 
     public String getUri() { return uri; }
+
+    public String getMethod() { return method; }
 
     public String getBody() { return body; }
 
