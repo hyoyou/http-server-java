@@ -32,7 +32,7 @@ public class Router {
     public RequestHandler handleRequest(Request request) {
         String uri = request.getUri();
         String method = request.getMethod();
-        List<String> allowedMethods = allowedMethods(uri);
+        List<String> allowedMethods = getAllowedMethods(uri);
         if (isValidRequest(uri, method)) {
             if (method.equals("OPTIONS")) {
                 return new OptionsHandler(buildResponse, allowedMethods);
@@ -45,14 +45,14 @@ public class Router {
     }
 
     private boolean isValidRequest(String uri, String method) {
-        if (allowedMethods(uri) != null) {
-            List<String> methodList = allowedMethods(uri);
+        if (getAllowedMethods(uri) != null) {
+            List<String> methodList = getAllowedMethods(uri);
             return methodList.contains(method);
         }
         return false;
     }
 
-    private List<String> allowedMethods(String uri) { return routeMap.get(uri); }
+    private List<String> getAllowedMethods(String uri) { return routeMap.get(uri); }
 
     private RequestHandler getHandler(String method) { return handlerMap.get(method); }
 
