@@ -4,13 +4,18 @@ import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class OptionsHandlerTest {
     @Test
     public void optionsHandlerReturnsResponseThatIncludesAllowedMethods() {
         BuildResponse buildResponse = new ResponseBuilder();
-        OptionsHandler handler = new OptionsHandler(buildResponse);
+        List<String> allowedMethods = new ArrayList<>(Arrays.asList("OPTIONS","HEAD","GET"));
+        OptionsHandler handler = new OptionsHandler(buildResponse, allowedMethods);
         Request request = new Request("/method_options", "OPTIONS", null);
         Response response = handler.handle(request);
         String actual = response.getResponse();

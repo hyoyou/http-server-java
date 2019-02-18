@@ -24,7 +24,6 @@ public class Router {
     public Router(BuildResponse buildResponse) {
         this.buildResponse = buildResponse;
         handlerMap = new HashMap<>();
-        handlerMap.put("OPTIONS", new OptionsHandler(buildResponse));
         handlerMap.put("GET", new GetHandler(buildResponse));
         handlerMap.put("HEAD", new GetHandler(buildResponse));
         handlerMap.put("POST", new PostHandler(buildResponse));
@@ -33,10 +32,13 @@ public class Router {
     public RequestHandler handleRequest(Request request) {
         String uri = request.getUri();
         String method = request.getMethod();
+        List<String> allowedMethods = allowedMethods(uri);
         if (isValidRequest(uri, method)) {
+            if (method.equals("OPTIONS")) {
+                return new OptionsHandler(buildResponse, allowedMethods);
+            }
             return getHandler(method);
         } else if (isValidRoute(uri)){
-            List<String> allowedMethods = allowedMethods(uri);
             return new MethodNotAllowedHandler(buildResponse, allowedMethods);
         }
         return new NoRouteFoundHandler(buildResponse);

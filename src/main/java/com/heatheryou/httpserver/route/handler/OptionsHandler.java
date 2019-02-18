@@ -2,7 +2,6 @@ package com.heatheryou.httpserver.route.handler;
 
 import com.heatheryou.httpserver.Request;
 import com.heatheryou.httpserver.Response;
-import com.heatheryou.httpserver.route.Router;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import com.heatheryou.httpserver.constants.EntityHeader;
 import com.heatheryou.httpserver.route.RequestHandler;
@@ -13,27 +12,26 @@ import static com.heatheryou.httpserver.constants.CharacterSet.EMPTY;
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
 
 public class OptionsHandler implements RequestHandler {
-    private Router router;
     private BuildResponse responseBuilder;
+    private List<String> allowedMethods;
 
-    public OptionsHandler(BuildResponse buildResponse) {
+    public OptionsHandler(BuildResponse buildResponse, List<String> allowedMethods) {
         this.responseBuilder = buildResponse;
+        this.allowedMethods = allowedMethods;
     }
 
     @Override
     public Response handle(Request request) {
-        String[] entityHeaders = new String[]{ getAllowedMethods(request), getContentLength() };
+        String[] entityHeaders = new String[]{ getAllowedMethods(), getContentLength() };
 
         return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, EMPTY);
     }
 
-    private String getAllowedMethods(Request request) {
-        return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList(request) + CharacterSet.CRLF;
+    private String getAllowedMethods() {
+        return EntityHeader.ALLOWED_METHODS + CharacterSet.SPACE + getAllowedMethodsList() + CharacterSet.CRLF;
     }
 
-    private String getAllowedMethodsList(Request request) {
-        router = new Router(responseBuilder);
-        List<String> allowedMethods = router.allowedMethods(request.getUri());
+    private String getAllowedMethodsList() {
         return String.join(",", allowedMethods);
     }
 
