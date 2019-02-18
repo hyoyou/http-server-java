@@ -64,9 +64,14 @@ public class RequestParser {
     }
 
     private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
+        char[] charArray = readBody(requestReader, contentLength);
+        body = new String(charArray);
+    }
+
+    private char[] readBody(BufferedReader requestReader, int contentLength) throws IOException {
         char[] charArray = new char[contentLength];
         requestReader.read(charArray, 0, contentLength);
-        body = new String(charArray);
+        return charArray;
     }
 
     public String getMethod() { return method; }
