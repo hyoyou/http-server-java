@@ -12,10 +12,18 @@ public class ResponseBuilder implements BuildResponse {
 
     @Override
     public Response buildResponse(int statusCode, String[] entityHeaders, String content) {
+        setResponse(statusCode, entityHeaders, content);
+        return getResponse();
+    }
+
+    private void setResponse(int statusCode, String[] entityHeaders, String content) {
         setStatusLine(statusCode);
         setEntityHeader(entityHeaders);
         setHeader();
         setBody(content);
+    }
+
+    private Response getResponse() {
         String header = getHeader();
         String body = getBody();
         return new Response(header, body);
