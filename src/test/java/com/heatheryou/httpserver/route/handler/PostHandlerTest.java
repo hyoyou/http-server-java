@@ -10,10 +10,10 @@ public class PostHandlerTest {
     @Test
     public void postHandlerReturnsBodyOfRequestInResponse() {
         BuildResponse buildResponse = new ResponseBuilder();
-        OptionsHandler handler = new OptionsHandler(buildResponse);
+        PostHandler handler = new PostHandler(buildResponse);
         Request request = new Request("/echo_body", "POST", "some body");
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",
                 "Content-Length: 9",

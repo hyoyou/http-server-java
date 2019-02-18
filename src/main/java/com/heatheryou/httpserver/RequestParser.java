@@ -14,6 +14,10 @@ public class RequestParser {
     public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
+        int contentLength = getContentLength(requestList);
+        if (contentLength > 0) {
+            setBody(requestReader, contentLength);
+        }
         setUri(requestLine);
         setMethod(requestLine);
         String uri = getUri();
@@ -37,12 +41,32 @@ public class RequestParser {
         return requestString.split(" ");
     }
 
+    private int getContentLength(List<String> requestList) {
+        int contentLength = 0;
+        int n = 0;
+        while (n < requestList.size()) {
+            String request = requestList.get(n);
+            String contentHeader = "Content-Length: ";
+            if (request.startsWith(contentHeader)) {
+                contentLength = Integer.parseInt(request.substring(contentHeader.length()));
+            }
+            n++;
+        }
+        return contentLength;
+    }
+
     private void setMethod(String[] requestLine) {
         method = requestLine[0];
     }
 
     private void setUri(String[] requestLine) {
         uri = requestLine[1];
+    }
+
+    private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
+        char[] charArray = new char[contentLength];
+        requestReader.read(charArray, 0, contentLength);
+        body = new String(charArray);
     }
 
     public String getMethod() { return method; }

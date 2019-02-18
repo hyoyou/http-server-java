@@ -27,7 +27,7 @@ public class Server implements AutoCloseable {
              Request request = parser.processRequest(requestReader);
              RequestHandler handler = router.handleRequest(request);
              Response response = handler.handle(request);
-             String responseString = response.getResponseLine();
+             String responseString = response.getResponse();
              printWriter.print(responseString);
              printWriter.flush();
          } catch (Exception e) {

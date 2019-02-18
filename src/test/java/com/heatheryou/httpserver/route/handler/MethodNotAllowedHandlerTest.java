@@ -11,14 +11,13 @@ public class MethodNotAllowedHandlerTest {
     public void methodNotAllowedHandlerReturnsStatusCode405AndAnEmptyBody() {
         BuildResponse buildResponse = new ResponseBuilder();
         MethodNotAllowedHandler handler = new MethodNotAllowedHandler(buildResponse);
-        Request request = new Request("/simple_get", "OPTIONS");
+        Request request = new Request("/simple_get", "OPTIONS", null);
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 405 Method Not Allowed",
                 "Allow: GET,HEAD",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });

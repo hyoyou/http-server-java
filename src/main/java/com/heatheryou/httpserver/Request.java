@@ -5,11 +5,6 @@ public class Request {
     private String uri;
     private String body;
 
-    public Request(String uri, String method) {
-        this.uri = uri;
-        this.method = method;
-    }
-
     public Request(String uri, String method, String body) {
         this.uri = uri;
         this.method = method;

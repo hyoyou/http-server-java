@@ -27,7 +27,7 @@ public class Router {
         handlerMap.put("OPTIONS", new OptionsHandler(buildResponse));
         handlerMap.put("GET", new GetHandler(buildResponse));
         handlerMap.put("HEAD", new GetHandler(buildResponse));
-        handlerMap.put("POST", new GetHandler(buildResponse));
+        handlerMap.put("POST", new PostHandler(buildResponse));
     }
 
     public RequestHandler handleRequest(Request request) {
@@ -38,7 +38,7 @@ public class Router {
         } else if (isValidRoute(uri)){
             return new MethodNotAllowedHandler(buildResponse);
         }
-        return new NoRouteFoundHandler();
+        return new NoRouteFoundHandler(buildResponse);
     }
 
 

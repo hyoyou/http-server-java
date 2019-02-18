@@ -11,14 +11,13 @@ public class GetHandlerTest {
     public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
         BuildResponse buildResponse = new ResponseBuilder();
         GetHandler handler = new GetHandler(buildResponse);
-        Request request = new Request("/redirect", "GET");
+        Request request = new Request("/redirect", "GET", null);
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 301 Moved Permanently",
                 "Location: http://0.0.0.0:5000/simple_get",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });

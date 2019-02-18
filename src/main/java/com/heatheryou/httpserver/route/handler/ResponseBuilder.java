@@ -35,7 +35,7 @@ public class ResponseBuilder implements BuildResponse {
     }
 
     private void setBody(String content) {
-        body = content + CharacterSet.CRLF;
+        body = content;
     }
 
     public String getStatusLine() {

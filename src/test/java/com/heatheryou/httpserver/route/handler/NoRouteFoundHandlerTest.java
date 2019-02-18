@@ -10,13 +10,12 @@ public class NoRouteFoundHandlerTest {
     @Test
     public void noRouteFoundHandlerReturnsStatusCode404AndAnEmptyBody() {
         NoRouteFoundHandler handler = new NoRouteFoundHandler();
-        Request request = new Request("/invalid_route", "GET");
+        Request request = new Request("/invalid_route", "GET", null);
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 404 Not Found",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });

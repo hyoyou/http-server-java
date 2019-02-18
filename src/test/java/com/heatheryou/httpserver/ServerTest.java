@@ -40,7 +40,6 @@ public class ServerTest {
                 "HTTP/1.1 200 OK",
                 "Content-Length: 0",
                 "",
-                "",
                 ""
         });
 
@@ -65,7 +64,6 @@ public class ServerTest {
                 "HTTP/1.1 200 OK",
                 "Allow: OPTIONS,HEAD,GET",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });

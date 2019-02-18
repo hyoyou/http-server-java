@@ -11,14 +11,13 @@ public class OptionsHandlerTest {
     public void optionsHandlerReturnsResponseThatIncludesAllowedMethods() {
         BuildResponse buildResponse = new ResponseBuilder();
         OptionsHandler handler = new OptionsHandler(buildResponse);
-        Request request = new Request("/method_options", "OPTIONS");
+        Request request = new Request("/method_options", "OPTIONS", null);
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",
                 "Allow: OPTIONS,HEAD,GET",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });
