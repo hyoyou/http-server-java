@@ -44,7 +44,6 @@ public class Router {
         return new NoRouteFoundHandler(buildResponse);
     }
 
-
     private boolean isValidRequest(String uri, String method) {
         if (allowedMethods(uri) != null) {
             List<String> methodList = allowedMethods(uri);
@@ -53,7 +52,7 @@ public class Router {
         return false;
     }
 
-    public List<String> allowedMethods(String uri) { return routeMap.get(uri); }
+    private List<String> allowedMethods(String uri) { return routeMap.get(uri); }
 
     private RequestHandler getHandler(String method) { return handlerMap.get(method); }
 
