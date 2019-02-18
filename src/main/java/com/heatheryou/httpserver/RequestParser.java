@@ -9,6 +9,7 @@ public class RequestParser {
     private List<String> requestList;
     String method;
     String uri;
+    String body;
 
     public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
@@ -17,7 +18,8 @@ public class RequestParser {
         setMethod(requestLine);
         String uri = getUri();
         String method = getMethod();
-        return new Request(uri, method);
+        String body = getBody();
+        return new Request(uri, method, body);
     }
 
     private List<String> readRequest(BufferedReader requestReader) throws IOException {
@@ -45,8 +47,8 @@ public class RequestParser {
 
     public String getMethod() { return method; }
 
-    public String getUri() {
-        return uri;
-    }
+    public String getUri() { return uri; }
+
+    public String getBody() { return body; }
 
 }

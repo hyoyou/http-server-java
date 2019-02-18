@@ -6,21 +6,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class OptionsHandlerTest {
+public class PostHandlerTest {
     @Test
-    public void optionsHandlerReturnsResponseThatIncludesAllowedMethods() {
+    public void postHandlerReturnsBodyOfRequestInResponse() {
         BuildResponse buildResponse = new ResponseBuilder();
         OptionsHandler handler = new OptionsHandler(buildResponse);
-        Request request = new Request("/method_options", "OPTIONS");
+        Request request = new Request("/echo_body", "POST", "some body");
         Response response = handler.handle(request);
         String actual = response.getResponseLine();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",
-                "Allow: OPTIONS,HEAD,GET",
-                "Content-Length: 0",
+                "Content-Length: 9",
                 "",
-                "",
-                ""
+                "some body"
         });
         assertEquals(expected, actual);
     }
