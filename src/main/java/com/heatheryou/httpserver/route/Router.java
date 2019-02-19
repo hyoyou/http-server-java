@@ -33,14 +33,19 @@ public class Router {
         String uri = request.getUri();
         String method = request.getMethod();
         List<String> allowedMethods = getAllowedMethods(uri);
+
+        if (isValidRequest(uri, method) && method.equals("OPTIONS")) {
+            return new OptionsHandler(buildResponse, allowedMethods);
+        }
+
         if (isValidRequest(uri, method)) {
-            if (method.equals("OPTIONS")) {
-                return new OptionsHandler(buildResponse, allowedMethods);
-            }
             return getHandler(method);
-        } else if (isValidRoute(uri)){
+        }
+
+        if (isValidRoute(uri)){
             return new MethodNotAllowedHandler(buildResponse, allowedMethods);
         }
+
         return new NoRouteFoundHandler(buildResponse);
     }
 
