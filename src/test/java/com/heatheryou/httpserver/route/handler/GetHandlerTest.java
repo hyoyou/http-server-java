@@ -9,15 +9,15 @@ import static org.junit.Assert.assertEquals;
 public class GetHandlerTest {
     @Test
     public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
-        GetHandler handler = new GetHandler();
-        Request request = new Request("/redirect", "GET");
+        BuildResponse buildResponse = new ResponseBuilder();
+        GetHandler handler = new GetHandler(buildResponse);
+        Request request = new Request("/redirect", "GET", "");
         Response response = handler.handle(request);
-        String actual = response.getResponseLine();
+        String actual = response.getResponse();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 301 Moved Permanently",
                 "Location: http://0.0.0.0:5000/simple_get",
                 "Content-Length: 0",
-                "",
                 "",
                 ""
         });

@@ -11,7 +11,7 @@ public class Response {
         this.body = body;
     }
 
-    public String getResponseLine() {
-        return header + body + CharacterSet.CRLF;
+    public String getResponse() {
+        return header + CharacterSet.CRLF + body;
     }
 }

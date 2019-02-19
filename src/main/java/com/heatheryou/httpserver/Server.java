@@ -2,6 +2,7 @@ package com.heatheryou.httpserver;
 
 import com.heatheryou.httpserver.route.RequestHandler;
 import com.heatheryou.httpserver.route.Router;
+import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -10,13 +11,11 @@ public class Server implements AutoCloseable {
     private IServerSocketWrapper serverSocketWrapper;
     private Router router;
     private RequestParser parser;
-    private ResponseBuilder builder;
 
-    public Server(IServerSocketWrapper serverSocketWrapper, Router router, RequestParser parser, ResponseBuilder builder) {
+    public Server(IServerSocketWrapper serverSocketWrapper, Router router, RequestParser parser) {
         this.serverSocketWrapper = serverSocketWrapper;
         this.router = router;
         this.parser = parser;
-        this.builder = builder;
     }
 
     public void start() {
@@ -28,7 +27,7 @@ public class Server implements AutoCloseable {
              Request request = parser.processRequest(requestReader);
              RequestHandler handler = router.handleRequest(request);
              Response response = handler.handle(request);
-             String responseString = response.getResponseLine();
+             String responseString = response.getResponse();
              printWriter.print(responseString);
              printWriter.flush();
          } catch (Exception e) {

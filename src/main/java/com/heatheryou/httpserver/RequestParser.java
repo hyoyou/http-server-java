@@ -1,5 +1,7 @@
 package com.heatheryou.httpserver;
 
+import com.heatheryou.httpserver.constants.CharacterSet;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,17 +9,16 @@ import java.util.List;
 
 public class RequestParser {
     private List<String> requestList;
-    String method;
     String uri;
+    String method;
+    String body;
 
     public Request processRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
-        setUri(requestLine);
-        setMethod(requestLine);
-        String uri = getUri();
-        String method = getMethod();
-        return new Request(uri, method);
+        int contentLength = getContentLength(requestList);
+        setRequest(requestReader, requestLine, contentLength);
+        return getRequest();
     }
 
     private List<String> readRequest(BufferedReader requestReader) throws IOException {
@@ -35,18 +36,60 @@ public class RequestParser {
         return requestString.split(" ");
     }
 
-    private void setMethod(String[] requestLine) {
-        method = requestLine[0];
+    private int getContentLength(List<String> requestList) {
+        int contentLength = 0;
+        int n = 0;
+        while (n < requestList.size()) {
+            String request = requestList.get(n);
+            String contentHeader = "Content-Length: ";
+            if (request.startsWith(contentHeader)) {
+                contentLength = Integer.parseInt(request.substring(contentHeader.length()));
+            }
+            n++;
+        }
+        return contentLength;
+    }
+
+    private void setRequest(BufferedReader requestReader, String[] requestLine, int contentLength) throws IOException {
+        setUri(requestLine);
+        setMethod(requestLine);
+        setBody(requestReader, contentLength);
     }
 
     private void setUri(String[] requestLine) {
         uri = requestLine[1];
     }
 
+    private void setMethod(String[] requestLine) {
+        method = requestLine[0];
+    }
+
+    private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
+        if (contentLength == 0) {
+            body = CharacterSet.EMPTY;
+        } else {
+            char[] charArray = readBody(requestReader, contentLength);
+            body = new String(charArray);
+        }
+    }
+
+    private char[] readBody(BufferedReader requestReader, int contentLength) throws IOException {
+        char[] charArray = new char[contentLength];
+        requestReader.read(charArray, 0, contentLength);
+        return charArray;
+    }
+
+    private Request getRequest() {
+        String uri = getUri();
+        String method = getMethod();
+        String body = getBody();
+        return new Request(uri, method, body);
+    }
+
+    public String getUri() { return uri; }
+
     public String getMethod() { return method; }
 
-    public String getUri() {
-        return uri;
-    }
+    public String getBody() { return body; }
 
 }

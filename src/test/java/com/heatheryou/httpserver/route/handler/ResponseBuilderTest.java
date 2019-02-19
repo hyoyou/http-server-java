@@ -1,12 +1,12 @@
-package com.heatheryou.httpserver;
+package com.heatheryou.httpserver.route.handler;
 
+import com.heatheryou.httpserver.Response;
 import com.heatheryou.httpserver.constants.CharacterSet;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.heatheryou.httpserver.constants.StatusLine.STATUS_CODE_200;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ResponseBuilderTest {
     String[] entityHeaders;
@@ -18,11 +18,6 @@ public class ResponseBuilderTest {
         entityHeaders = new String[]{"Content-Length: 0"};
         builder = new ResponseBuilder();
         response = builder.buildResponse(STATUS_CODE_200, entityHeaders, CharacterSet.EMPTY);
-    }
-
-    @Test
-    public void buildResponseReturnsAResponseObject() {
-        assertThat(response, instanceOf(Response.class));
     }
 
     @Test
