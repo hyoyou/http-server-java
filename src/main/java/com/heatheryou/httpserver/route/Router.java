@@ -34,7 +34,7 @@ public class Router {
         String method = request.getMethod();
         List<String> allowedMethods = getAllowedMethods(uri);
 
-        if (isValidRequest(uri, method) && method.equals("OPTIONS")) {
+        if (isOptions(uri, method)) {
             return new OptionsHandler(buildResponse, allowedMethods);
         }
 
@@ -47,6 +47,10 @@ public class Router {
         }
 
         return new NoRouteFoundHandler(buildResponse);
+    }
+
+    private boolean isOptions(String uri, String method) {
+        return isValidRequest(uri, method) && method.equals("OPTIONS");
     }
 
     private boolean isValidRequest(String uri, String method) {
