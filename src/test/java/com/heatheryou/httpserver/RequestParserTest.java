@@ -40,7 +40,7 @@ public class RequestParserTest {
     }
 
     @Test
-    public void getMethodReturnsUriOfRequest() throws IOException {
+    public void getUriReturnsUriOfRequest() throws IOException {
         parser.processRequest(bufferedReader);
         String actual = parser.getUri();
         String expected = "/simple_get";
