@@ -1,4 +1,4 @@
-# HTTP Server
+# HTTP Server [![CircleCI](https://circleci.com/gh/hyoyou/http-server-java.svg?style=svg)](https://circleci.com/gh/hyoyou/http-server-java)
 
 [Production Server URL](https://heathers-java-http-server.herokuapp.com/)
 
@@ -21,7 +21,3 @@ $ gradle test
 ```
 $ gradle run
 ```
-
-## CircleCI Status
-
-[![CircleCI](https://circleci.com/gh/hyoyou/http-server-java.svg?style=svg)](https://circleci.com/gh/hyoyou/http-server-java)
