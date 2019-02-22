@@ -15,6 +15,5 @@ public class MockServerSocketWrapper implements IServerSocketWrapper {
     }
 
     @Override
-    public void close() throws IOException {
-    }
+    public void close() throws IOException { }
 }

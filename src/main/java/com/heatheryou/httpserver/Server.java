@@ -19,21 +19,16 @@ public class Server implements AutoCloseable {
         this.parser = parser;
     }
 
-    public void start() {
-         try {
-             ISocketWrapper clientSocket = serverSocketWrapper.accept();
-             BufferedReader requestReader = clientSocket.getInputStreamReader();
-             PrintWriter printWriter = clientSocket.getPrintWriter();
-
-             Request request = parser.processRequest(requestReader);
-             RequestHandler handler = router.handleRequest(request);
-             Response response = handler.handle(request);
-             String responseString = response.getResponse();
-             printWriter.print(responseString);
-             printWriter.flush();
-         } catch (Exception e) {
-             System.out.println(e.getMessage());
-         }
+    public void start() throws IOException {
+        ISocketWrapper clientSocket = serverSocketWrapper.accept();
+        BufferedReader requestReader = clientSocket.getInputStreamReader();
+        PrintWriter printWriter = clientSocket.getPrintWriter();
+        Request request = parser.processRequest(requestReader);
+        RequestHandler handler = router.handleRequest(request);
+        Response response = handler.handle(request);
+        String responseString = response.getResponse();
+        printWriter.print(responseString);
+        printWriter.flush();
     }
 
     @Override

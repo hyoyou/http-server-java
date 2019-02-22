@@ -52,7 +52,7 @@ public class RequestParser {
     }
 
     private void setRequest(BufferedReader requestReader, String[] requestLine, int contentLength) throws IOException {
-        setUri(requestLine);
+        setUri(requestLine); //extractUri
         setMethod(requestLine);
         setBody(requestReader, contentLength);
     }
