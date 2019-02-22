@@ -24,6 +24,6 @@ public class PostHandler implements RequestHandler {
     }
 
     private String getContentLength(String body) {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + body.length() + CharacterSet.CRLF;
+        return EntityHeader.CONTENT_LENGTH + body.length() + CharacterSet.CRLF;
     }
 }

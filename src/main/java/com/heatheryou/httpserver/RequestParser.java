@@ -1,6 +1,7 @@
 package com.heatheryou.httpserver;
 
 import com.heatheryou.httpserver.constants.CharacterSet;
+import com.heatheryou.httpserver.constants.EntityHeader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class RequestParser {
         int n = 0;
         while (n < requestList.size()) {
             String request = requestList.get(n);
-            String contentHeader = "Content-Length: ";
+            String contentHeader = EntityHeader.CONTENT_LENGTH;
             if (request.startsWith(contentHeader)) {
                 contentLength = Integer.parseInt(request.substring(contentHeader.length()));
             }

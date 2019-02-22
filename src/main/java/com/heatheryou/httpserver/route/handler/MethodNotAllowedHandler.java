@@ -36,7 +36,7 @@ public class MethodNotAllowedHandler implements RequestHandler {
     }
 
     private String getContentLength() {
-        return EntityHeader.CONTENT_LENGTH + CharacterSet.SPACE + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
+        return EntityHeader.CONTENT_LENGTH + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
 
