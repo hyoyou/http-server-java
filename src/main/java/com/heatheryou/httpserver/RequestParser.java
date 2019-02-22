@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Does this class need to be stateful?
+
 public class RequestParser {
     private List<String> requestList;
     String uri;
@@ -41,6 +43,7 @@ public class RequestParser {
         int n = 0;
         while (n < requestList.size()) {
             String request = requestList.get(n);
+            // Maybe extract to a constant?
             String contentHeader = "Content-Length: ";
             if (request.startsWith(contentHeader)) {
                 contentLength = Integer.parseInt(request.substring(contentHeader.length()));
@@ -86,6 +89,7 @@ public class RequestParser {
         return new Request(uri, method, body);
     }
 
+    // Are these methods used anywhere?  Or would these just come from the Request?
     public String getUri() { return uri; }
 
     public String getMethod() { return method; }

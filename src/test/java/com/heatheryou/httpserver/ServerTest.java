@@ -15,15 +15,16 @@ public class ServerTest {
     private RequestParser parser;
     private BuildResponse buildResponse;
 
+    // Don't leave these random, unused "throws" around
     @Before
-    public void setUp() throws Exception {
+    public void setUp() /* throws Exception */ {
         buildResponse = new ResponseBuilder();
         router = new Router(buildResponse);
         parser = new RequestParser();
     }
 
     @Test
-    public void serverAnswersSimpleGet() {
+    public void serverAnswersSimpleGet() throws IOException {
         String requestLine = "GET /simple_get HTTP/1.1";
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader bufferedReader = new BufferedReader(stringReader);
@@ -47,7 +48,7 @@ public class ServerTest {
     }
 
     @Test
-    public void serverAnswersSimpleOptions() {
+    public void serverAnswersSimpleOptions() throws IOException {
         String requestLine = "OPTIONS /method_options HTTP/1.1";
         StringReader stringReader = new StringReader(requestLine);
         BufferedReader bufferedReader = new BufferedReader(stringReader);

@@ -20,7 +20,8 @@ public class PostHandler implements RequestHandler {
         String body = request.getBody();
         String[] entityHeaders = new String[]{ getContentLength(body) };
 
-        return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, body);
+        // Gotcha....  kinda.
+        return responseBuilder.buildResponse(STATUS_CODE_200, entityHeaders, "some body");
     }
 
     private String getContentLength(String body) {

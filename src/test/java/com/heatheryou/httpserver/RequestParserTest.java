@@ -9,6 +9,8 @@ import java.io.StringReader;
 
 import static org.junit.Assert.*;
 
+// Are these tests a enough?
+
 public class RequestParserTest {
     String requestLine;
     StringReader stringReader;

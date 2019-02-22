@@ -22,6 +22,7 @@ public class Router {
     private Map<String, RequestHandler> handlerMap;
 
     public Router(BuildResponse buildResponse) {
+        // This looks a bit odd to me that we set a static member in the constructor for an instance?
         this.buildResponse = buildResponse;
         handlerMap = new HashMap<>();
         handlerMap.put("GET", new GetHandler(buildResponse));

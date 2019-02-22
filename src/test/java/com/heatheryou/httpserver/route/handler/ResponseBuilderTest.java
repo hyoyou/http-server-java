@@ -36,6 +36,8 @@ public class ResponseBuilderTest {
 
     @Test
     public void getHeaderReturnsStatusLineAndEntityHeader() {
+        // I don't remember my http RFC that well.  Is this the header?
+        // I usually think of the "Headers" as everything after the status line and before the body.
         String actual = builder.getHeader();
         String expected = String.join("\r\n", new String[]{
                 "HTTP/1.1 200 OK",

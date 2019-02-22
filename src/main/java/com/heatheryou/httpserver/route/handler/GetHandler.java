@@ -23,6 +23,8 @@ public class GetHandler implements RequestHandler {
         String[] entityHeaders = new String[]{ getContentLength(body) };
 
         String uri = request.getUri();
+        // this almost looks like router logic...?
+        // Should there be a redirect handler?
         if (uri.equals("/redirect")) {
             return redirectResponse(body);
         }

@@ -17,8 +17,9 @@ public class ServerSocketWrapper implements IServerSocketWrapper, AutoCloseable 
         return new SocketWrapper(socket);
     }
 
+    // We throw Exception here...?  But we catch it...?
     @Override
-    public void close() throws Exception {
+    public void close() /* throws Exception */ {
         try {
             serverSocket.close();
         } catch (IOException e) {
