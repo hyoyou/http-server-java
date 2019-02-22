@@ -5,6 +5,7 @@ import com.heatheryou.httpserver.route.Router;
 import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Server implements AutoCloseable {
@@ -36,6 +37,7 @@ public class Server implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
+        serverSocketWrapper.close();
     }
 }
