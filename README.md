@@ -1,5 +1,7 @@
 # HTTP Server
 
+[Production Server URL](https://heathers-java-http-server.herokuapp.com/)
+
 ## Prerequisites
 * Java SE 11
 * Gradle 5.1.1
@@ -19,3 +21,7 @@ $ gradle test
 ```
 $ gradle run
 ```
+
+## CircleCI Status
+
+[![CircleCI](https://circleci.com/gh/hyoyou/http-server-java.svg?style=svg)](https://circleci.com/gh/hyoyou/http-server-java)
