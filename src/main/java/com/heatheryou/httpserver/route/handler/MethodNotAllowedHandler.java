@@ -39,4 +39,3 @@ public class MethodNotAllowedHandler implements RequestHandler {
         return EntityHeader.CONTENT_LENGTH + EntityHeader.CONTENT_LENGTH_0 + CharacterSet.CRLF;
     }
 }
-

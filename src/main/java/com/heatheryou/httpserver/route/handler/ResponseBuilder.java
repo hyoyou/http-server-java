@@ -34,25 +34,15 @@ public class ResponseBuilder implements BuildResponse {
                 StatusLine.getReasonPhrase(statusCode) + CharacterSet.CRLF;
     }
 
-    private void setEntityHeader(String[] entityHeaders) {
-        entityHeader = String.join("", entityHeaders);
-    }
+    private void setEntityHeader(String[] entityHeaders) { entityHeader = String.join("", entityHeaders); }
 
-    private void setHeader() {
-        header = getStatusLine() + getEntityHeader();
-    }
+    private void setHeader() { header = getStatusLine() + getEntityHeader(); }
 
-    private void setBody(String content) {
-        body = content;
-    }
+    private void setBody(String content) { body = content; }
 
-    public String getStatusLine() {
-        return statusLine;
-    }
+    public String getStatusLine() { return statusLine; }
 
-    public String getEntityHeader() {
-        return entityHeader;
-    }
+    public String getEntityHeader() { return entityHeader; }
 
     public String getHeader() { return header; }
 
