@@ -1,45 +1,40 @@
 package com.heatheryou.httpserver;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CommandLineArgsTest {
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final PrintStream originalErr = System.err;
-
-    @Before
-    public void setUp() {
-        System.setErr(new PrintStream(errContent));
-    }
-
-    @After
-    public void restore() {
-        System.setErr(originalErr);
-    }
-
-    @Ignore
-    public void commandLineArgsPrintsErrorWhenInvalidRequestReceived() {
+    @Test
+    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequest() {
         String[] args = new String[]{"random", "5000"};
-        CommandLineArgs.validate(args);
 
-        String actual = errContent.toString();
-        String expected = "Usage: java -jar http-server.jar <port number>";
-        assertEquals(actual, expected);
+        boolean actual = CommandLineArgs.isInvalid(args);
+        assertTrue(actual);
     }
 
     @Test
-    public void commandLineArgsExtractsPortNumberFromValidRequest() {
+    public void isInvalidDeterminesValidityOfRequestAndReturnsFalseForValidRequest() {
+        String[] args = new String[]{"5000"};
+
+        boolean actual = CommandLineArgs.isInvalid(args);
+        assertFalse(actual);
+    }
+
+    @Test
+    public void parsePortExtractsPortNumberFromValidRequest() {
         String[] args = new String[]{"8080"};
 
         int actual = CommandLineArgs.parsePort(args);
         int expected = 8080;
         assertEquals(actual, expected);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void parsePortThrowsErrorOnInvalidRequest() {
+        String[] args = new String[]{"abcde"};
+        CommandLineArgs.parsePort(args);
     }
 }
