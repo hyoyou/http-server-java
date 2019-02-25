@@ -29,6 +29,9 @@ public class Router {
         List<String> allowedMethods = getAllowedMethods(uri);
 
         if (isGetOrHead(uri, method)) {
+            if (isRedirect(uri)) {
+                return new RedirectHandler(buildResponse);
+            }
             return new GetHandler(buildResponse);
         }
 
@@ -49,6 +52,10 @@ public class Router {
 
     private boolean isGetOrHead(String uri, String method) {
         return isValidRequest(uri, method) && (method.equals("GET") || method.equals("HEAD"));
+    }
+
+    private boolean isRedirect(String uri) {
+        return uri.equals("/redirect");
     }
 
     private boolean isOptions(String uri, String method) {
