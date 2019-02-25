@@ -8,8 +8,16 @@ import static org.junit.Assert.assertFalse;
 
 public class CommandLineArgsTest {
     @Test
-    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequest() {
+    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequestWithStringAndInteger() {
         String[] args = new String[]{"random", "5000"};
+
+        boolean actual = CommandLineArgs.isInvalid(args);
+        assertTrue(actual);
+    }
+
+    @Test
+    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequestWithString() {
+        String[] args = new String[]{"random"};
 
         boolean actual = CommandLineArgs.isInvalid(args);
         assertTrue(actual);
@@ -21,6 +29,27 @@ public class CommandLineArgsTest {
 
         boolean actual = CommandLineArgs.isInvalid(args);
         assertFalse(actual);
+    }
+
+    @Test
+    public void validateExitsApplicationWithInvalidRequest() {
+        MockSystemOutput mockOutput = new MockSystemOutput();
+        String[] args = new String[]{"random", "5000"};
+        CommandLineArgs.displayErr(args, mockOutput);
+
+        boolean actual = mockOutput.exit;
+        assertTrue(actual);
+    }
+
+    @Test
+    public void validatePrintsUsageToApplicationWithInvalidRequest() {
+        MockSystemOutput mockOutput = new MockSystemOutput();
+        String[] args = new String[]{"random", "5000"};
+        CommandLineArgs.displayErr(args, mockOutput);
+
+        String actual = mockOutput.lastOutput;
+        String expected = "Usage: java -jar http-server.jar <port number>";
+        assertEquals(actual, expected);
     }
 
     @Test

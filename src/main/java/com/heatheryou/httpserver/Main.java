@@ -6,9 +6,10 @@ import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        SystemOutput systemOutput = new SystemOutput();
+
         if (CommandLineArgs.isInvalid(args)) {
-            System.err.println("Usage: java -jar http-server.jar <port number>");
-            System.exit(1);
+            CommandLineArgs.displayErr(args, systemOutput);
         }
 
         while (true) {
