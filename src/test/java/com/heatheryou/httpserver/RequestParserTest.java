@@ -33,17 +33,30 @@ public class RequestParserTest {
 
     @Test
     public void getMethodReturnsMethodOfRequest() throws IOException {
-        parser.processRequest(bufferedReader);
-        String actual = parser.getMethod();
+        Request request = parser.processRequest(bufferedReader);
+        String actual = request.getMethod();
         String expected = "GET";
         assertEquals(expected, actual);
     }
 
     @Test
     public void getUriReturnsUriOfRequest() throws IOException {
-        parser.processRequest(bufferedReader);
-        String actual = parser.getUri();
+        Request request = parser.processRequest(bufferedReader);
+        String actual = request.getUri();
         String expected = "/simple_get";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getBodyReturnsBodyOfRequest() throws IOException {
+        String request = "GET /simple_get HTTP/1.1\r\nContent-Length: 5\r\nhello\r\n";
+        StringReader stringReader = new StringReader(request);
+        BufferedReader bufferedReader = new BufferedReader(stringReader);
+        RequestParser parser = new RequestParser();
+        Request parsedRequest = parser.processRequest(bufferedReader);
+        String body = parsedRequest.getBody();
+        int actual = body.length();
+        int expected = 5;
         assertEquals(expected, actual);
     }
 }
