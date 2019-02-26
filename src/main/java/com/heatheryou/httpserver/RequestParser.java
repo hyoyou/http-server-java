@@ -10,13 +10,32 @@ import java.util.List;
 
 public class RequestParser {
     private List<String> requestList;
+    private ISystemOutput systemOutput;
 
-    public Request processRequest(BufferedReader requestReader) throws IOException {
+    public RequestParser(ISystemOutput systemOutput) {
+        this.systemOutput = systemOutput;
+    }
+
+    public Request processRequest(BufferedReader requestReader) {
+        try {
+            return routeValidRequest(requestReader);
+        } catch (Exception e) {
+            return routeInvalidRequest();
+        }
+    }
+
+    private Request routeValidRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
         int contentLength = getContentLength(requestList);
         return getRequest(requestReader, requestLine, contentLength);
     }
+
+    private Request routeInvalidRequest() {
+        systemOutput.printErr("Exception: Bad Request");
+        return new Request(null, null, null);
+    }
+
 
     private List<String> readRequest(BufferedReader requestReader) throws IOException {
         requestList = new ArrayList<>();

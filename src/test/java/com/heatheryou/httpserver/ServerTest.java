@@ -14,12 +14,14 @@ public class ServerTest {
     private Router router;
     private RequestParser parser;
     private BuildResponse buildResponse;
+    private ISystemOutput systemOutput;
 
     @Before
     public void setUp() {
         buildResponse = new ResponseBuilder();
         router = new Router(buildResponse);
-        parser = new RequestParser();
+        systemOutput = new MockSystemOutput();
+        parser = new RequestParser(systemOutput);
     }
 
     @Test
