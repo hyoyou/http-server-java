@@ -41,7 +41,7 @@ public class SetupTest {
         setup.execute();
 
         String actual = mockOutput.lastOutput;
-        String expected = "Usage: java -jar build/libs/http-server-1.0.jar <port number>";
+        String expected = "Usage: java -jar build/libs/http-server-1.0-SNAPSHOT.jar <port number>";
         assertEquals(actual, expected);
     }
 }
