@@ -1,19 +1,14 @@
 package com.heatheryou.httpserver;
 
 public class CommandLineArgs {
-    public static void displayErr(ISystemOutput systemOutput) {
-        systemOutput.printErr("Usage: java -jar build/libs/http-server-1.0.jar <port number>");
-        systemOutput.exit(1);
-    }
-
-    public static boolean isInvalid(String[] args) {
-        if (args.length != 1) { return true; }
+    public static boolean isValid(String[] args) {
+        if (args.length != 1) { return false; }
 
         try {
             parsePort(args);
-            return false;
-        } catch(NumberFormatException e) {
             return true;
+        } catch(NumberFormatException e) {
+            return false;
         }
     }
 

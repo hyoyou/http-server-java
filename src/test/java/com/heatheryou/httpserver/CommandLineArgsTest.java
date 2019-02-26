@@ -8,48 +8,27 @@ import static org.junit.Assert.assertFalse;
 
 public class CommandLineArgsTest {
     @Test
-    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequestWithStringAndInteger() {
+    public void isValidDeterminesValidityOfRequestAndReturnsFalseForInvalidRequestWithStringAndInteger() {
         String[] args = new String[]{"random", "5000"};
 
-        boolean actual = CommandLineArgs.isInvalid(args);
-        assertTrue(actual);
-    }
-
-    @Test
-    public void isInvalidDeterminesValidityOfRequestAndReturnsTrueForInvalidRequestWithString() {
-        String[] args = new String[]{"random"};
-
-        boolean actual = CommandLineArgs.isInvalid(args);
-        assertTrue(actual);
-    }
-
-    @Test
-    public void isInvalidDeterminesValidityOfRequestAndReturnsFalseForValidRequest() {
-        String[] args = new String[]{"5000"};
-
-        boolean actual = CommandLineArgs.isInvalid(args);
+        boolean actual = CommandLineArgs.isValid(args);
         assertFalse(actual);
     }
 
     @Test
-    public void validateExitsApplicationWithInvalidRequest() {
-        MockSystemOutput mockOutput = new MockSystemOutput();
-        String[] args = new String[]{"random", "5000"};
-        CommandLineArgs.displayErr(mockOutput);
+    public void isValidDeterminesValidityOfRequestAndReturnsFalseForInvalidRequestWithString() {
+        String[] args = new String[]{"random"};
 
-        boolean actual = mockOutput.exit;
-        assertTrue(actual);
+        boolean actual = CommandLineArgs.isValid(args);
+        assertFalse(actual);
     }
 
     @Test
-    public void validatePrintsUsageToApplicationWithInvalidRequest() {
-        MockSystemOutput mockOutput = new MockSystemOutput();
-        String[] args = new String[]{"random", "5000"};
-        CommandLineArgs.displayErr(mockOutput);
+    public void isValidDeterminesValidityOfRequestAndReturnsTrueForValidRequest() {
+        String[] args = new String[]{"5000"};
 
-        String actual = mockOutput.lastOutput;
-        String expected = "Usage: java -jar build/libs/http-server-1.0.jar <port number>";
-        assertEquals(actual, expected);
+        boolean actual = CommandLineArgs.isValid(args);
+        assertTrue(actual);
     }
 
     @Test

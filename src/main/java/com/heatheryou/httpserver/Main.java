@@ -7,16 +7,13 @@ import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 public class Main {
     public static void main(String[] args) throws Exception {
         ISystemOutput systemOutput = new SystemOutput();
-
-        if (CommandLineArgs.isInvalid(args)) {
-            CommandLineArgs.displayErr(systemOutput);
-        }
+        Setup setup = new Setup(args, new CommandLineArgs(), systemOutput);
+        int port = setup.execute();
 
         while (true) {
             BuildResponse buildResponse = new ResponseBuilder();
             Router router = new Router(buildResponse);
             RequestParser parser = new RequestParser(systemOutput);
-            int port = CommandLineArgs.parsePort(args);
 
             ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(port);
             Server server = new Server(serverSocketWrapper, router, parser);
