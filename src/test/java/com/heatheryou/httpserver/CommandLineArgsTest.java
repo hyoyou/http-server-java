@@ -48,7 +48,7 @@ public class CommandLineArgsTest {
         CommandLineArgs.displayErr(mockOutput);
 
         String actual = mockOutput.lastOutput;
-        String expected = "Usage: java -jar http-server.jar <port number>";
+        String expected = "Usage: java -jar build/libs/http-server-1.0.jar <port number>";
         assertEquals(actual, expected);
     }
 

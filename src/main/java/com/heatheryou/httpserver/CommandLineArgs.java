@@ -2,7 +2,7 @@ package com.heatheryou.httpserver;
 
 public class CommandLineArgs {
     public static void displayErr(ISystemOutput systemOutput) {
-        systemOutput.printErr("Usage: java -jar build/libs/http-server-1.0-SNAPSHOT.jar <port number>");
+        systemOutput.printErr("Usage: java -jar build/libs/http-server-1.0.jar <port number>");
         systemOutput.exit(1);
     }
 

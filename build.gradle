@@ -5,10 +5,9 @@ plugins {
 
 application {
     mainClassName = 'com.heatheryou.httpserver.Main'
-    executableDir = '/src'
 }
 
-version '1.0-SNAPSHOT'
+version '1.0'
 
 sourceCompatibility = 1.8
 
