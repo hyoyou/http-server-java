@@ -35,7 +35,7 @@ public class CommandLineArgsTest {
     public void validateExitsApplicationWithInvalidRequest() {
         MockSystemOutput mockOutput = new MockSystemOutput();
         String[] args = new String[]{"random", "5000"};
-        CommandLineArgs.displayErr(args, mockOutput);
+        CommandLineArgs.displayErr(mockOutput);
 
         boolean actual = mockOutput.exit;
         assertTrue(actual);
@@ -45,7 +45,7 @@ public class CommandLineArgsTest {
     public void validatePrintsUsageToApplicationWithInvalidRequest() {
         MockSystemOutput mockOutput = new MockSystemOutput();
         String[] args = new String[]{"random", "5000"};
-        CommandLineArgs.displayErr(args, mockOutput);
+        CommandLineArgs.displayErr(mockOutput);
 
         String actual = mockOutput.lastOutput;
         String expected = "Usage: java -jar http-server.jar <port number>";
