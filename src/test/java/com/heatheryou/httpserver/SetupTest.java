@@ -12,7 +12,7 @@ public class SetupTest {
     Setup setup;
 
     @Before
-    public void setup() {
+    public void setUp() {
         mockOutput = new MockSystemOutput();
         args = new String[]{"random", "5000"};
         setup = new Setup(args, new CommandLineArgs(), mockOutput);
@@ -29,7 +29,7 @@ public class SetupTest {
     }
 
     @Test
-    public void executeExitsApplicationWithInvalidRequest() {
+    public void executeExitsApplicationWithInvalidArguments() {
         setup.execute();
 
         boolean actual = mockOutput.exit;
@@ -37,7 +37,7 @@ public class SetupTest {
     }
 
     @Test
-    public void executePrintsUsageToApplicationWithInvalidRequest() {
+    public void executePrintsUsageToApplicationWithInvalidArguments() {
         setup.execute();
 
         String actual = mockOutput.lastOutput;
