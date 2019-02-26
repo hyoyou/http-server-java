@@ -6,8 +6,7 @@ import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        ISystemOutput systemOutput;
-        systemOutput = new SystemOutput();
+        ISystemOutput systemOutput = new SystemOutput();
 
         if (CommandLineArgs.isInvalid(args)) {
             CommandLineArgs.displayErr(systemOutput);
