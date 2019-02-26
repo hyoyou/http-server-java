@@ -5,46 +5,13 @@ import com.heatheryou.httpserver.constants.EntityHeader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RequestParser {
-    private List<String> requestList;
-    private ISystemOutput systemOutput;
-
-    public RequestParser(ISystemOutput systemOutput) {
-        this.systemOutput = systemOutput;
-    }
-
-    public Request processRequest(BufferedReader requestReader) {
-        try {
-            return routeValidRequest(requestReader);
-        } catch (Exception e) {
-            return routeInvalidRequest();
-        }
-    }
-
-    private Request routeValidRequest(BufferedReader requestReader) throws IOException {
-        List<String> requestList = readRequest(requestReader);
-        String[] requestLine = parse(requestList);
-        int contentLength = getContentLength(requestList);
+    public Request processRequest(BufferedReader requestReader, List<String> requestData) throws IOException {
+        String[] requestLine = parse(requestData);
+        int contentLength = getContentLength(requestData);
         return getRequest(requestReader, requestLine, contentLength);
-    }
-
-    private Request routeInvalidRequest() {
-        systemOutput.printErr("Exception: Bad Request");
-        return new Request(null, null, null);
-    }
-
-
-    private List<String> readRequest(BufferedReader requestReader) throws IOException {
-        requestList = new ArrayList<>();
-        String inputLine = requestReader.readLine();
-        while (inputLine != null && inputLine.length() > 0) {
-            requestList.add(inputLine);
-            inputLine = requestReader.readLine();
-        }
-        return requestList;
     }
 
     private String[] parse(List<String> requestList) {

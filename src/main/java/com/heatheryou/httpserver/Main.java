@@ -13,10 +13,11 @@ public class Main {
         while (true) {
             BuildResponse buildResponse = new ResponseBuilder();
             Router router = new Router(buildResponse);
-            RequestParser parser = new RequestParser(systemOutput);
+            RequestValidator validator = new RequestValidator(systemOutput);
+            RequestParser parser = new RequestParser();
 
             ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(port);
-            Server server = new Server(serverSocketWrapper, router, parser);
+            Server server = new Server(serverSocketWrapper, parser, validator, router);
 
             server.start();
 

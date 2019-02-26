@@ -11,9 +11,10 @@ import java.io.*;
 import static org.junit.Assert.assertEquals;
 
 public class ServerTest {
-    private Router router;
-    private RequestParser parser;
     private BuildResponse buildResponse;
+    private RequestValidator validator;
+    private RequestParser parser;
+    private Router router;
     private ISystemOutput systemOutput;
 
     @Before
@@ -21,7 +22,8 @@ public class ServerTest {
         buildResponse = new ResponseBuilder();
         router = new Router(buildResponse);
         systemOutput = new MockSystemOutput();
-        parser = new RequestParser(systemOutput);
+        validator = new RequestValidator(systemOutput);
+        parser = new RequestParser();
     }
 
     @Test
@@ -33,7 +35,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper, router, parser);
+        Server server = new Server(mockServerSocketWrapper, parser, validator, router);
 
         server.start();
 
@@ -57,7 +59,7 @@ public class ServerTest {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(printWriter, bufferedReader);
         MockServerSocketWrapper mockServerSocketWrapper = new MockServerSocketWrapper(mockSocketWrapper);
-        Server server = new Server(mockServerSocketWrapper, router, parser);
+        Server server = new Server(mockServerSocketWrapper, parser, validator, router);
 
         server.start();
 
