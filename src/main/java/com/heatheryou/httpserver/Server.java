@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Server implements AutoCloseable {
+public class Server {
     private IServerSocketWrapper serverSocketWrapper;
     private Router router;
     private RequestParser parser;
@@ -30,7 +30,6 @@ public class Server implements AutoCloseable {
         printWriter.flush();
     }
 
-    @Override
     public void close() throws IOException {
         serverSocketWrapper.close();
     }
