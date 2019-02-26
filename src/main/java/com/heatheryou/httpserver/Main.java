@@ -6,16 +6,17 @@ import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        SystemOutput systemOutput = new SystemOutput();
+        ISystemOutput systemOutput;
+        systemOutput = new SystemOutput();
 
         if (CommandLineArgs.isInvalid(args)) {
-            CommandLineArgs.displayErr(args, systemOutput);
+            CommandLineArgs.displayErr(systemOutput);
         }
 
         while (true) {
             BuildResponse buildResponse = new ResponseBuilder();
             Router router = new Router(buildResponse);
-            RequestParser parser = new RequestParser();
+            RequestParser parser = new RequestParser(systemOutput);
             int port = CommandLineArgs.parsePort(args);
 
             ServerSocketWrapper serverSocketWrapper = new ServerSocketWrapper(port);

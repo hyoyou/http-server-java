@@ -1,7 +1,7 @@
 package com.heatheryou.httpserver;
 
 public class CommandLineArgs {
-    public static void displayErr(String[] args, ISystemOutput systemOutput) {
+    public static void displayErr(ISystemOutput systemOutput) {
         systemOutput.printErr("Usage: java -jar http-server.jar <port number>");
         systemOutput.exit(1);
     }
