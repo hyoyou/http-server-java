@@ -19,7 +19,7 @@ public class Main {
             Server server = new Server(serverSocketWrapper, router, parser);
 
             server.start();
-            serverSocketWrapper.close();
+
             server.close();
         }
     }
