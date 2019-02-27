@@ -18,11 +18,7 @@ public class ServerSocketWrapper implements IServerSocketWrapper, AutoCloseable 
     }
 
     @Override
-    public void close() throws Exception {
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void close() throws IOException {
+        serverSocket.close();
     }
 }

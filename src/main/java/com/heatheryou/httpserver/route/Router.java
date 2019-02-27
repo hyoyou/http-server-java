@@ -19,14 +19,8 @@ public class Router {
         routeMap.put("/echo_body", new ArrayList<>(Arrays.asList("POST")));
     }
 
-    private Map<String, RequestHandler> handlerMap;
-
     public Router(BuildResponse buildResponse) {
         this.buildResponse = buildResponse;
-        handlerMap = new HashMap<>();
-        handlerMap.put("GET", new GetHandler(buildResponse));
-        handlerMap.put("HEAD", new GetHandler(buildResponse));
-        handlerMap.put("POST", new PostHandler(buildResponse));
     }
 
     public RequestHandler handleRequest(Request request) {
@@ -34,12 +28,19 @@ public class Router {
         String method = request.getMethod();
         List<String> allowedMethods = getAllowedMethods(uri);
 
+        if (isGetOrHead(uri, method)) {
+            if (isRedirect(uri)) {
+                return new RedirectHandler(buildResponse);
+            }
+            return new GetHandler(buildResponse);
+        }
+
         if (isOptions(uri, method)) {
             return new OptionsHandler(buildResponse, allowedMethods);
         }
 
-        if (isValidRequest(uri, method)) {
-            return getHandler(method);
+        if (isPost(uri, method)) {
+            return new PostHandler(buildResponse);
         }
 
         if (isValidRoute(uri)){
@@ -49,8 +50,20 @@ public class Router {
         return new NoRouteFoundHandler(buildResponse);
     }
 
+    private boolean isGetOrHead(String uri, String method) {
+        return isValidRequest(uri, method) && (method.equals("GET") || method.equals("HEAD"));
+    }
+
+    private boolean isRedirect(String uri) {
+        return uri.equals("/redirect");
+    }
+
     private boolean isOptions(String uri, String method) {
         return isValidRequest(uri, method) && method.equals("OPTIONS");
+    }
+
+    private boolean isPost(String uri, String method) {
+        return isValidRequest(uri, method) && method.equals("POST");
     }
 
     private boolean isValidRequest(String uri, String method) {
@@ -62,8 +75,6 @@ public class Router {
     }
 
     private List<String> getAllowedMethods(String uri) { return routeMap.get(uri); }
-
-    private RequestHandler getHandler(String method) { return handlerMap.get(method); }
 
     private boolean isValidRoute(String uri) {
         return routeMap.containsKey(uri);

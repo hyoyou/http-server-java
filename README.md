@@ -1,4 +1,6 @@
-# HTTP Server
+# HTTP Server [![CircleCI](https://circleci.com/gh/hyoyou/http-server-java.svg?style=svg)](https://circleci.com/gh/hyoyou/http-server-java)
+
+[Production Server URL](https://heathers-java-http-server.herokuapp.com/)
 
 ## Prerequisites
 * Java SE 11
