@@ -7,8 +7,7 @@ import com.heatheryou.httpserver.route.handler.ResponseBuilder;
 public class Main {
     public static void main(String[] args) throws Exception {
         ISystemOutput systemOutput = new SystemOutput();
-        Setup setup = new Setup(args, new CommandLineArgs(), systemOutput);
-        int port = setup.execute();
+        int port = 5000;
 
         while (true) {
             BuildResponse buildResponse = new ResponseBuilder();

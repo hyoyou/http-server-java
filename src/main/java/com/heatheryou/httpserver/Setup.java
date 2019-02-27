@@ -20,6 +20,7 @@ public class Setup {
     }
 
     private void executeError() {
+        systemOutput.printErr(args[0]);
         systemOutput.printErr("Usage: java -jar build/libs/http-server-1.0-SNAPSHOT.jar <port number>");
         systemOutput.exit(1);
     }
