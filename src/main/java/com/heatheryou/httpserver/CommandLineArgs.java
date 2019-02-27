@@ -1,7 +1,7 @@
 package com.heatheryou.httpserver;
 
 public class CommandLineArgs {
-    public static boolean isValid(String[] args) {
+    public boolean isValid(String[] args) {
         if (args.length != 1) { return false; }
 
         try {
@@ -12,7 +12,7 @@ public class CommandLineArgs {
         }
     }
 
-    public static int parsePort(String[] args) {
+    public int parsePort(String[] args) {
         return Integer.parseInt(args[0]);
     }
 }
