@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class GetHandlerTest {
+public class RedirectHandlerTest {
     @Test
-    public void getHandlerReturnsStatusCode301IfUriIsRedirect() {
+    public void redirectHandlerReturnsStatusCode301IfUriIsRedirect() {
         BuildResponse buildResponse = new ResponseBuilder();
-        GetHandler handler = new GetHandler(buildResponse);
+        RedirectHandler handler = new RedirectHandler(buildResponse);
         Request request = new Request("/redirect", "GET", "");
         Response response = handler.handle(request);
         String actual = response.getResponse();

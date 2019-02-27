@@ -1,6 +1,7 @@
 package com.heatheryou.httpserver;
 
 import com.heatheryou.httpserver.constants.CharacterSet;
+import com.heatheryou.httpserver.constants.EntityHeader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,17 +10,32 @@ import java.util.List;
 
 public class RequestParser {
     private List<String> requestList;
-    String uri;
-    String method;
-    String body;
+    private ISystemOutput systemOutput;
 
-    public Request processRequest(BufferedReader requestReader) throws IOException {
+    public RequestParser(ISystemOutput systemOutput) {
+        this.systemOutput = systemOutput;
+    }
+
+    public Request processRequest(BufferedReader requestReader) {
+        try {
+            return routeValidRequest(requestReader);
+        } catch (Exception e) {
+            return routeInvalidRequest();
+        }
+    }
+
+    private Request routeValidRequest(BufferedReader requestReader) throws IOException {
         List<String> requestList = readRequest(requestReader);
         String[] requestLine = parse(requestList);
         int contentLength = getContentLength(requestList);
-        setRequest(requestReader, requestLine, contentLength);
-        return getRequest();
+        return getRequest(requestReader, requestLine, contentLength);
     }
+
+    private Request routeInvalidRequest() {
+        systemOutput.printErr("Exception: Bad Request");
+        return new Request(null, null, null);
+    }
+
 
     private List<String> readRequest(BufferedReader requestReader) throws IOException {
         requestList = new ArrayList<>();
@@ -41,7 +57,7 @@ public class RequestParser {
         int n = 0;
         while (n < requestList.size()) {
             String request = requestList.get(n);
-            String contentHeader = "Content-Length: ";
+            String contentHeader = EntityHeader.CONTENT_LENGTH;
             if (request.startsWith(contentHeader)) {
                 contentLength = Integer.parseInt(request.substring(contentHeader.length()));
             }
@@ -50,26 +66,27 @@ public class RequestParser {
         return contentLength;
     }
 
-    private void setRequest(BufferedReader requestReader, String[] requestLine, int contentLength) throws IOException {
-        setUri(requestLine);
-        setMethod(requestLine);
-        setBody(requestReader, contentLength);
+    private Request getRequest(BufferedReader requestReader, String[] requestLine, int contentLength) throws IOException {
+        String uri = extractUri(requestLine);
+        String method = extractMethod(requestLine);
+        String body = extractBody(requestReader, contentLength);
+        return new Request(uri, method, body);
     }
 
-    private void setUri(String[] requestLine) {
-        uri = requestLine[1];
+    private String extractUri(String[] requestLine) {
+        return requestLine[1];
     }
 
-    private void setMethod(String[] requestLine) {
-        method = requestLine[0];
+    private String extractMethod(String[] requestLine) {
+        return requestLine[0];
     }
 
-    private void setBody(BufferedReader requestReader, int contentLength) throws IOException {
+    private String extractBody(BufferedReader requestReader, int contentLength) throws IOException {
         if (contentLength == 0) {
-            body = CharacterSet.EMPTY;
+            return CharacterSet.EMPTY;
         } else {
             char[] charArray = readBody(requestReader, contentLength);
-            body = new String(charArray);
+            return new String(charArray);
         }
     }
 
@@ -78,18 +95,4 @@ public class RequestParser {
         requestReader.read(charArray, 0, contentLength);
         return charArray;
     }
-
-    private Request getRequest() {
-        String uri = getUri();
-        String method = getMethod();
-        String body = getBody();
-        return new Request(uri, method, body);
-    }
-
-    public String getUri() { return uri; }
-
-    public String getMethod() { return method; }
-
-    public String getBody() { return body; }
-
 }
